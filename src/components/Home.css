@@ -1,0 +1,35 @@
+.form-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.border-left {
+  border-left: 2px solid #ddd; /* คุณสามารถปรับสีและความหนาของเส้น border ตามที่ต้องการ */
+  padding-left: 15px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.col-md-6 {
+  padding: 15px;
+}
+
+.form-control[readonly] {
+  background-color: #f8f9fa;
+}
+
+.receipt-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* เพิ่ม CSS นี้ถ้าคุณต้องการปรับแต่งขนาดของ modal เพิ่มเติม */
+.modal-dialog.modal-xl {
+    max-width: 90%; /* หรือค่าอื่นๆ ที่คุณต้องการ */
+  }
+  
