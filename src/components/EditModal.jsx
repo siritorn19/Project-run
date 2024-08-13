@@ -5,7 +5,7 @@ import { extractFileIdFromUrl, getGoogleDriveImageUrl } from "./utils";
 
 function EditModal({ show, onClose, formData, onInputChange, onSaveChanges }) {
     const [isEditing, setIsEditing] = useState(false);
-    const navigate = useNavigate(); // Updated useHistory to useNavigate
+    const navigate = useNavigate();
     const printRef = useRef();
 
     const handlePrint = () => {
@@ -26,10 +26,15 @@ function EditModal({ show, onClose, formData, onInputChange, onSaveChanges }) {
         onInputChange(name, value);
     };
 
+    const handleClose = () => {
+        setIsEditing(false);  // Reset isEditing when the modal closes
+        onClose();
+    };
+
     return (
         <Modal
             show={show}
-            onHide={onClose}
+            onHide={handleClose} // Use the new handleClose function here
             dialogClassName="modal-xl"
         >
             <Modal.Header closeButton>
@@ -239,7 +244,7 @@ function EditModal({ show, onClose, formData, onInputChange, onSaveChanges }) {
                 </div>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={onClose}>
+                <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
                 <Button variant="info" onClick={handleEditToggle}>
