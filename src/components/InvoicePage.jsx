@@ -14,8 +14,21 @@ function InvoicePage() {
     };
 
     return (
-        <div>
-            <div ref={printRef}>
+        <div style={{ position: "relative", minHeight: "100vh", padding: "20px" }}>
+            {/* Print Button positioned at the top right */}
+            <Button
+                variant="primary"
+                onClick={handlePrint}
+                style={{
+                    position: "absolute",
+                    top: "20px",
+                    right: "20px",
+                }}
+            >
+                Print
+            </Button>
+
+            <div ref={printRef} style={{ paddingBottom: "150px" }}>
                 <h1 style={{ textAlign: "center", textDecoration: "underline" }}>
                     ต้นฉบับใบกำกับภาษี / ใบเสร็จรับเงิน
                 </h1>
@@ -37,6 +50,7 @@ function InvoicePage() {
                             <th style={{ border: "1px solid black", padding: "8px" }}>รายการ</th>
                             <th style={{ border: "1px solid black", padding: "8px" }}>ราคารวม (บาท)</th>
                             <th style={{ border: "1px solid black", padding: "8px" }}>VAT</th>
+                            <th style={{ border: "1px solid black", padding: "8px" }}>จำนวนเงิน</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,21 +59,29 @@ function InvoicePage() {
                             <td style={{ border: "1px solid black", padding: "8px" }}>บัตรเดิน-วิ่ง วันที่ 17 ส.ค. 2567 : VIP ทุกระยะ</td>
                             <td style={{ border: "1px solid black", padding: "8px" }}>1,000.00</td>
                             <td style={{ border: "1px solid black", padding: "8px" }}>Y</td>
+                            <td style={{ border: "1px solid black", padding: "8px" }}>1,000</td>
                         </tr>
                     </tbody>
                 </table>
 
-                <p><strong>รวมเงิน:</strong> 1,000.00 บาท</p>
-                <p>ส่วนลดเงินสด: 0.00 บาท</p>
-                <p>มูลค่าสินค้าที่เสียภาษีมูลค่าเพิ่ม: 934.58 บาท</p>
-                <p>ภาษีมูลค่าเพิ่ม: 65.42 บาท</p>
-                <p><strong>รวมเงินสุทธิ:</strong> 1,000.00 บาท</p>
+                <div style={{ position: "absolute", bottom: 0, width: "100%" }}>
+                    <div style={{ marginTop: "20px" }}>
+                        <p style={{ margin: "0" }}>ส่วนลดเงินสด: 0.00 บาท</p>
+                        <p style={{ margin: "0" }}>มูลค่าสินค้าที่เสียภาษีมูลค่าเพิ่ม: 934.58 บาท</p>
+                        <p style={{ margin: "0" }}>ภาษีมูลค่าเพิ่ม: 65.42 บาท</p>
+                        <p style={{ marginTop: "10px" }}>
+                            <strong>รวมเงินสุทธิ:</strong> 1,000.00 บาท
+                        </p>
+                    </div>
 
-                <p><strong>หมายเหตุ:</strong> โปรดเก็บไว้เป็นหลักฐาน บิ๊กซี ขอสงวนสิทธิ์ในการรับเปลี่ยน/คืนสินค้า หากไม่มีใบเสร็จรับเงินมาแสดง</p>
+                    <div style={{ marginTop: "20px" }}>
+                        <p style={{ fontSize: "12px", margin: "0" }}>
+                            <strong>หมายเหตุ:</strong> โปรดเก็บไว้เป็นหลักฐาน บิ๊กซี ขอสงวนสิทธิ์ในการรับเปลี่ยน/คืนสินค้า
+                            หากไม่มีใบเสร็จรับเงินมาแสดง
+                        </p>
+                    </div>
+                </div>
             </div>
-            <Button variant="primary" onClick={handlePrint}>
-                Print
-            </Button>
         </div>
     );
 }
