@@ -50,7 +50,7 @@ function Home() {
           },
         }
       );
-      console.log(result.data.data);
+      //console.log(result.data.data);
     
       return result.data.data;
     } catch (error) {
@@ -73,7 +73,7 @@ function Home() {
   );
 
   const handleEditClick = (item) => {
-    console.log("ตรวจสอบข้อมูล ID:", item.id);
+    //console.log("ตรวจสอบข้อมูล ID:", item.id);
     setSelectedItem(item);
     setFormData({
       statusRegister: item.statusRegister || "",
@@ -95,7 +95,7 @@ function Home() {
     const respData = await fetchDataApi();
     setData(respData);
   };
-  
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -164,8 +164,8 @@ function Home() {
             id: selectedIds, // Send the selected IDs as an array
             shirt_status: "Received"
           };
-          console.log("API URL:", url);
-          console.log("Payload:", payload);
+          //console.log("API URL:", url);
+          //console.log("Payload:", payload);
       
           const response = await axios.post(url, payload, {
             headers: {
@@ -279,7 +279,7 @@ function Home() {
                   <td>{item.name}</td>
                   <td>{item.tel}</td>
                   <td>{item.km}</td>
-                  <td>{item.bib_id}0001</td>
+                  <td>{item.bib_id}</td>
                   <td>{item.shirt_size}</td>
                   <td>{item.company?item.company+"/":""}{item.employee_code}</td>
                   <td style={{ backgroundColor: (item.remark_award)?"yellow":"" }}>{item.remark_award}</td>
@@ -292,7 +292,18 @@ function Home() {
                     </Button>
                   </td>
                   <td>
-                    {item.shirt_status === "Received" ? (
+                  {item.status_register === "Check" ? ( <span
+                        style={{
+                          backgroundColor: "red",
+                         // color: "green",
+                          fontWeight: "bold",
+                          display: "block",
+                          textAlign: "center",
+                        }}
+                      >
+                        สถานะการสมัคร Check
+                      </span>):
+                    (item.shirt_status === "Received" ? (
                       <span
                         style={{
                           color: "green",
@@ -317,7 +328,8 @@ function Home() {
                           handleCheckboxChange(item.id, item.shirt_status)
                         }
                       />
-                    )}
+                    ))
+                  }
                   </td>
                 </tr>
               ))}
@@ -387,7 +399,7 @@ function Home() {
         id={selectedItem?.id}
         onInputChange={handleInputChange}
         onSaveChanges={() => {
-          console.log("Saving changes for ID:", selectedItem?.id);
+          //console.log("Saving changes for ID:", selectedItem?.id);
           handleCloseEdit();
         }}
       />

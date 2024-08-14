@@ -14,7 +14,7 @@ const Navbar = () => {
   return (
     <nav className="navbar bg-body-tertiary shadow p-3 mb-5 bg-white rounded">
       <Container fluid>
-        <span className="navbar-brand mb-0 h1">Project Run</span>
+        <span className="navbar-brand mb-0 h1">BigC running together</span>
         <Button variant="default" onClick={handleLogout} style={{ marginLeft: "auto" }}>
           <b>Logout</b>
         </Button>
