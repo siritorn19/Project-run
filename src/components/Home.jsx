@@ -51,6 +51,7 @@ function Home() {
         }
       );
       console.log(result.data.data);
+    
       return result.data.data;
     } catch (error) {
       console.error(error);
@@ -60,8 +61,9 @@ function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchDataApi();
-      setData(data);
+      const respData = await fetchDataApi();
+
+      setData(respData);
     };
     fetchData();
   }, []);
@@ -88,8 +90,12 @@ function Home() {
     setShowEditModal(true);
   };
 
-  const handleCloseEdit = () => setShowEditModal(false);
-
+  const handleCloseEdit = async() => {
+    setShowEditModal(false);
+    const respData = await fetchDataApi();
+    setData(respData);
+  };
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -201,13 +207,16 @@ function Home() {
     currentPage * itemsPerPage
   );
 
-
+  const handleSearch = async (e) => {
+    setSearch(e.target.value);
+    setCurrentPage(1);
+  }
 
 
 
   return (
     <Container
-      style={{ maxWidth: "1500px", margin: "auto", padding: "30px" }}
+      style={{ maxWidth: "1500px", margin: "auto", padding: "10px" }}
     >
       <InputGroup
         className="mb-3 d-flex justify-content-center"
@@ -218,7 +227,7 @@ function Home() {
           aria-label="Search"
           aria-describedby="basic-addon2"
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => handleSearch(e)}
           style={{ fontSize: "1.25rem", padding: "10px" }}
         />
         <Button
@@ -241,8 +250,10 @@ function Home() {
                 <th width="10%">หมายเลขบัตรประชาชน</th>
                 <th width="10%">ชื่อ-สกุล</th>
                 <th width="10%">เบอร์โทรศัพท์</th>
-                <th width="20%">ระยะวิ่ง</th>
-                <th width="20%">ขนาดเสื้อที่ต้องการ</th>
+                <th width="15%">ระยะวิ่ง</th>
+                <th width="5%">BIB No</th>
+                <th width="10%">ขนาดเสื้อที่ต้องการ</th>
+                <th width="10%">บริษัท/รหัสพนักงาน</th>
                 <th width="10%">remark</th>
                 <th width="10%"></th>
                 <th width="10%">
@@ -268,8 +279,10 @@ function Home() {
                   <td>{item.name}</td>
                   <td>{item.tel}</td>
                   <td>{item.km}</td>
+                  <td>{item.bib_id}0001</td>
                   <td>{item.shirt_size}</td>
-                  <td>{item.remark_award}</td>
+                  <td>{item.company?item.company+"/":""}{item.employee_code}</td>
+                  <td style={{ backgroundColor: (item.remark_award)?"yellow":"" }}>{item.remark_award}</td>
                   <td>
                     <Button
                       variant="primary"
@@ -294,7 +307,8 @@ function Home() {
                       <Form.Check
                         type="checkbox"
                         label={
-                          <span style={{ color: "red" }}>
+                          <span style={{ color: "red" }} onClick={() =>
+                            handleCheckboxChange(item.id, item.shirt_status)}>
                             ยังไม่ได้รับเสื้อ
                           </span>
                         }

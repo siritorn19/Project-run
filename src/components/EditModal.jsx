@@ -206,7 +206,7 @@ function EditModal({ show, onClose, id }) {
                 className="form-text"
                 style={{
                   width: "80%",
-                  color: data.shirt_status === "รับเสื้อแล้ว" ? "green" : "red",
+                  color: data.shirt_status === "Received" ? "green" : "red",
                   fontWeight: "bold",
                   fontSize: "18px",
                   padding: "0.375rem 0.75rem", // Mimics padding of input
@@ -215,7 +215,7 @@ function EditModal({ show, onClose, id }) {
                   border: "1px solid #ced4da", // Mimics border of input
                 }}
               >
-                {data.shirt_status || "ยังไม่ได้รับเสื้อ"}
+                {data.shirt_status==="Received" ? "รับเสื้อแล้ว" : "ยังไม่ได้รับเสื้อ"}
               </div>
             </div>
 
