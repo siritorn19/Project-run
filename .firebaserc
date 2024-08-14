@@ -1,0 +1,18 @@
+{
+  "projects": {
+    "bigc-run-together-stg": "bigc-line",
+    "bigc-run-together-prod": "bigc-line"
+  },
+  "targets": {
+    "bigc-line": {
+      "hosting": {
+        "bigc-run-together-stg": [
+          "bigc-run-together-stg"
+        ],
+        "bigc-run-together-prod": [
+          "bigc-run-together-cms"
+        ]
+      }
+    }
+  }
+}

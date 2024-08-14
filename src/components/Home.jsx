@@ -43,10 +43,10 @@ function Home() {
   const fetchDataApi = async () => {
     try {
       const result = await axios.get(
-        "https://bigc-special-project-api-stg-aedsyeswba-as.a.run.app/running72/account/",
+        `${process.env.REACT_APP_BACKEND_DOMAIN_API}/running72/account/`,
         {
           headers: {
-            "x-api-key": "line-stg",
+            "x-api-key": process.env.REACT_APP_X_API_KEY,
           },
         }
       );
@@ -119,14 +119,14 @@ function Home() {
     if (selectedIds.length === 1) {
       // Update shirtStatus for a single checkbox
       try {
-        const url = `https://bigc-special-project-api-stg-aedsyeswba-as.a.run.app/running72/account/update/`;
+        const url = `${process.env.REACT_APP_BACKEND_DOMAIN_API}/running72/account/update/`;
         const payload = {
           shirt_status: "Received",
           id: selectedIds[0],
         };
         const response = await axios.post(url, payload, {
           headers: {
-            "x-api-key": "line-stg",
+            "x-api-key": process.env.REACT_APP_X_API_KEY,
           },
         });
         if (response.status === 200) {
@@ -153,7 +153,7 @@ function Home() {
     }else if (selectedIds.length > 1) {
         // Update group status for multiple checkboxes
         try {
-          const url = `https://bigc-special-project-api-stg-aedsyeswba-as.a.run.app/running72/account/group-received`;
+          const url = `${process.env.REACT_APP_BACKEND_DOMAIN_API}/running72/account/group-received`;
           const payload = {
             id: selectedIds, // Send the selected IDs as an array
             shirt_status: "Received"
@@ -163,7 +163,7 @@ function Home() {
       
           const response = await axios.post(url, payload, {
             headers: {
-              "x-api-key": "line-stg",
+              "x-api-key": process.env.REACT_APP_X_API_KEY,
             },
           });
       
@@ -207,11 +207,11 @@ function Home() {
 
   return (
     <Container
-      style={{ maxWidth: "1500px", margin: "auto", paddingTop: "50px" }}
+      style={{ maxWidth: "1500px", margin: "auto", padding: "30px" }}
     >
       <InputGroup
         className="mb-3 d-flex justify-content-center"
-        style={{ maxWidth: "600px", width: "100%" }}
+        style={{ maxWidth: "600px", width: "100%", float: "right"  }}
       >
         <FormControl
           placeholder="Search..."
@@ -238,13 +238,14 @@ function Home() {
           >
             <thead style={{ fontSize: "18px" }}>
               <tr>
-                <th>หมายเลขบัตรประชาชน</th>
-                <th>ชื่อ-สกุล</th>
-                <th>เบอร์โทรศัพท์</th>
-                <th>ขนาดเสื้อที่ต้องการ</th>
-                <th>remark</th>
-                <th></th>
-                <th>
+                <th width="10%">หมายเลขบัตรประชาชน</th>
+                <th width="10%">ชื่อ-สกุล</th>
+                <th width="10%">เบอร์โทรศัพท์</th>
+                <th width="20%">ระยะวิ่ง</th>
+                <th width="20%">ขนาดเสื้อที่ต้องการ</th>
+                <th width="10%">remark</th>
+                <th width="10%"></th>
+                <th width="10%">
                   {" "}
                   {/* Update Button */}
                   {selectedIds.length > 0 && (
@@ -266,6 +267,7 @@ function Home() {
                   <td>{item.card_id}</td>
                   <td>{item.name}</td>
                   <td>{item.tel}</td>
+                  <td>{item.km}</td>
                   <td>{item.shirt_size}</td>
                   <td>{item.remark_award}</td>
                   <td>

@@ -20,10 +20,10 @@ function EditModal({ show, onClose, id }) {
   const fetchApiData = async () => {
     try {
       const result = await Axios.get(
-        `https://bigc-special-project-api-stg-aedsyeswba-as.a.run.app/running72/account/${id}`,
+        `${process.env.REACT_APP_BACKEND_DOMAIN_API}/running72/account/${id}`,
         {
           headers: {
-            'x-api-key': 'line-stg'
+            'x-api-key': process.env.REACT_APP_X_API_KEY
           }
         }
       );
@@ -38,11 +38,11 @@ function EditModal({ show, onClose, id }) {
     setIsLoading(true);
     try {
       await Axios.post(
-        `https://bigc-special-project-api-stg-aedsyeswba-as.a.run.app/running72/account/update`,
+        `${process.env.REACT_APP_BACKEND_DOMAIN_API}/running72/account/update`,
         data,  // Send the updated data
         {
           headers: {
-            'x-api-key': 'line-stg',
+            'x-api-key': process.env.REACT_APP_X_API_KEY,
             'Content-Type': 'application/json'
           }
         }
