@@ -36,6 +36,9 @@ function Home() {
     tel: "",
     shirtSize: "",
   });
+  const [selectedIds, setSelectedIds] = useState([]);
+
+
 
   const fetchDataApi = async () => {
     try {
@@ -47,11 +50,11 @@ function Home() {
           },
         }
       );
-      console.log(result.data);
+      console.log(result.data.data);
       return result.data.data;
     } catch (error) {
       console.error(error);
-      return null;
+      return [];
     }
   };
 
@@ -69,19 +72,18 @@ function Home() {
 
   const handleEditClick = (item) => {
     console.log("ตรวจสอบข้อมูล ID:", item.id);
-
     setSelectedItem(item);
     setFormData({
-      //   statusRegister: item.statusRegister,
-      //   shirtStatus: item.shirtStatus,
-      //   timestamp: item.Timestamp,
-      km: item.km,
-      slip: item.slip,
-      cardId: item.card_id,
-      name: item.name,
-      address: item.address,
-      tel: item.tel,
-      //   shirtSize: item.shirtSize,
+      statusRegister: item.statusRegister || "",
+      shirtStatus: item.shirt_status || "",
+      timestamp: item.Timestamp || "",
+      km: item.km || "",
+      slip: item.slip || "",
+      cardId: item.card_id || "",
+      name: item.name || "",
+      address: item.address || "",
+      tel: item.tel || "",
+      shirtSize: item.shirt_size || "",
     });
     setShowEditModal(true);
   };
@@ -96,55 +98,112 @@ function Home() {
     }));
   };
 
-  const handleCheckboxChange = async (id, currentStatus) => {
-    const newStatus = currentStatus === "รับเสื้อแล้ว" ? "" : "รับเสื้อแล้ว";
-    try {
-      const url =
-        "https://bigc-special-project-api-stg-aedsyeswba-as.a.run.app/running72/account/update";
-      const payload = {
-        shirtStatus: newStatus,
-        id: id,
-      };
-      const response = await axios.post(url, payload, {
-        headers: {
-          Authorization: "Bearer YOUR_AUTH_TOKEN",
-        },
-      });
+  const handleCheckboxChange = (id, currentStatus) => {
+    const newStatus = currentStatus === "Received" ? "" : "Received";
+    setCheckedItems((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
 
-      if (response.status === 200) {
-        setData((prevData) =>
-          prevData.map((item) =>
-            item.id === id ? { ...item, shirtStatus: newStatus } : item
-          )
-        );
-        setCheckedItems((prevCheckedItems) => ({
-          ...prevCheckedItems,
-          [id]: newStatus === "รับเสื้อแล้ว",
-        }));
-        setAlertTitle("Success");
-        setAlertMessage("Status updated successfully");
-        setShowAlertModal(true);
-      } else {
-        setAlertTitle("Error");
-        setAlertMessage("Error updating status");
-        setShowAlertModal(true);
-      }
-    } catch (error) {
-      console.error("Error updating shirt status:", error);
-      setAlertTitle("Error");
-      setAlertMessage("Error updating status");
-      setShowAlertModal(true);
-    }
+    setSelectedIds((prev) => {
+      const newSelectedIds = prev.includes(id)
+        ? prev.filter((itemId) => itemId !== id)
+        : [...prev, id];
+      return newSelectedIds;
+    });
   };
 
-  // Pagination
+
+
+  const handleUpdateClick = async () => {
+    if (selectedIds.length === 1) {
+      // Update shirtStatus for a single checkbox
+      try {
+        const url = `https://bigc-special-project-api-stg-aedsyeswba-as.a.run.app/running72/account/update/`;
+        const payload = {
+          shirt_status: "Received",
+          id: selectedIds[0],
+        };
+        const response = await axios.post(url, payload, {
+          headers: {
+            "x-api-key": "line-stg",
+          },
+        });
+        if (response.status === 200) {
+          setData((prevData) =>
+            prevData.map((item) =>
+              item.id === selectedIds[0]
+                ? { ...item, shirt_status: "Received" }
+                : item
+            )
+          );
+          setAlertTitle("Success");
+          setAlertMessage("Shirt status updated successfully");
+        } else {
+          setAlertTitle("Error");
+          setAlertMessage("Error updating shirt status");
+        }
+      } catch (error) {
+        console.error("Error updating shirt status:", error);
+        setAlertTitle("Error");
+        setAlertMessage("Error updating shirt status");
+      } finally {
+        setShowAlertModal(true);
+      }
+    }else if (selectedIds.length > 1) {
+        // Update group status for multiple checkboxes
+        try {
+          const url = `https://bigc-special-project-api-stg-aedsyeswba-as.a.run.app/running72/account/group-received`;
+          const payload = {
+            id: selectedIds, // Send the selected IDs as an array
+            shirt_status: "Received"
+          };
+          console.log("API URL:", url);
+          console.log("Payload:", payload);
+      
+          const response = await axios.post(url, payload, {
+            headers: {
+              "x-api-key": "line-stg",
+            },
+          });
+      
+          if (response.status === 200) {
+            // Update state with new status
+            setData((prevData) =>
+              prevData.map((item) =>
+                selectedIds.includes(item.id)
+                  ? { ...item, shirt_status: "Received" }
+                  : item
+              )
+            );
+            setAlertTitle("Success");
+            setAlertMessage("Shirt statuses updated successfully.");
+          } else {
+            setAlertTitle("Error");
+            setAlertMessage("Error updating shirt statuses");
+          }
+        } catch (error) {
+          console.error("Error updating shirt statuses:", error);
+          setAlertTitle("Error");
+          setAlertMessage("Error updating shirt statuses");
+        } finally {
+          setShowAlertModal(true);
+        }
+      }
+      
+  };
+
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 20;
+  const itemsPerPage = 30;
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
   const currentItems = filteredData.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+
+
+
+
 
   return (
     <Container
@@ -171,90 +230,149 @@ function Home() {
         </Button>
       </InputGroup>
 
-      <Table
-        className="table table-striped table-hover"
-        style={{ marginTop: "20px" }}
-      >
-        <thead style={{ fontSize: "18px" }}>
-          <tr>
-            <th>หมายเลขบัตรประชาชน</th>
-            <th>ชื่อ-สกุล</th>
-            <th>เบอร์โทรศัพท์</th>
-            <th>ขนาดเสื้อที่ต้องการ</th>
-            <th>remark</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentItems.map((item) => (
-            <tr key={item.id}>
-              <td>{item.card_id}</td>
-              <td>{item.name}</td>
-              <td>{item.tel}</td>
-              <td>{item.shirt_size}</td>
-              <td>{item.remark_award}</td>
-              <td>
-                <Button variant="primary" onClick={() => handleEditClick(item)}>
-                  ตรวจสอบข้อมูล
-                </Button>
-              </td>
-              <td>
-                {item.shirtStatus === "รับเสื้อแล้ว" ? (
-                  <span
-                    style={{
-                      color: "green",
-                      fontWeight: "bold",
-                      display: "block",
-                      textAlign: "center",
-                    }}
-                  >
-                    รับเสื้อแล้ว
-                  </span>
-                ) : (
-                  <Form.Check
-                    type="checkbox"
-                    label={
-                      <span style={{ color: "red" }}>ยังไม่ได้รับเสื้อ</span>
-                    }
-                    checked={checkedItems[item.id] || false}
-                    onChange={() =>
-                      handleCheckboxChange(item.id, item.shirtStatus)
-                    }
-                  />
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+      {currentItems.length > 0 ? (
+        <>
+          <Table
+            className="table table-striped table-hover"
+            style={{ marginTop: "20px" }}
+          >
+            <thead style={{ fontSize: "18px" }}>
+              <tr>
+                <th>หมายเลขบัตรประชาชน</th>
+                <th>ชื่อ-สกุล</th>
+                <th>เบอร์โทรศัพท์</th>
+                <th>ขนาดเสื้อที่ต้องการ</th>
+                <th>remark</th>
+                <th></th>
+                <th>
+                  {" "}
+                  {/* Update Button */}
+                  {selectedIds.length > 0 && (
+                    <div
+                      className="d-flex justify-content-center"
+                      style={{ marginTop: "20px" }}
+                    >
+                      <Button variant="success" onClick={handleUpdateClick}>
+                        Update
+                      </Button>
+                    </div>
+                  )}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentItems.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.card_id}</td>
+                  <td>{item.name}</td>
+                  <td>{item.tel}</td>
+                  <td>{item.shirt_size}</td>
+                  <td>{item.remark_award}</td>
+                  <td>
+                    <Button
+                      variant="primary"
+                      onClick={() => handleEditClick(item)}
+                    >
+                      ตรวจสอบข้อมูล
+                    </Button>
+                  </td>
+                  <td>
+                    {item.shirt_status === "Received" ? (
+                      <span
+                        style={{
+                          color: "green",
+                          fontWeight: "bold",
+                          display: "block",
+                          textAlign: "center",
+                        }}
+                      >
+                        รับเสื้อแล้ว
+                      </span>
+                    ) : (
+                      <Form.Check
+                        type="checkbox"
+                        label={
+                          <span style={{ color: "red" }}>
+                            ยังไม่ได้รับเสื้อ
+                          </span>
+                        }
+                        checked={checkedItems[item.id] || false}
+                        onChange={() =>
+                          handleCheckboxChange(item.id, item.shirt_status)
+                        }
+                      />
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
 
-      {/* Pagination */}
-      <div className="d-flex justify-content-center">
-        <Pagination>
-          {Array.from({ length: totalPages }, (_, index) => (
-            <Pagination.Item
-              key={index + 1}
-              active={index + 1 === currentPage}
-              onClick={() => setCurrentPage(index + 1)}
-            >
-              {index + 1}
-            </Pagination.Item>
-          ))}
-        </Pagination>
-      </div>
+          {/* Pagination */}
+         {/* Pagination */}
+<div className="d-flex justify-content-center">
+  <Pagination>
+    {currentPage > 1 && (
+      <Pagination.First onClick={() => setCurrentPage(1)} />
+    )}
+    {currentPage > 1 && (
+      <Pagination.Prev onClick={() => setCurrentPage(currentPage - 1)} />
+    )}
+
+    {Array.from({ length: Math.min(10, totalPages) }, (_, index) => {
+      const pageNumber = index + 1;
+      return (
+        <Pagination.Item
+          key={pageNumber}
+          active={pageNumber === currentPage}
+          onClick={() => setCurrentPage(pageNumber)}
+        >
+          {pageNumber}
+        </Pagination.Item>
+      );
+    })}
+
+    {totalPages > 10 && currentPage < totalPages && (
+      <>
+        <Pagination.Ellipsis />
+        <Pagination.Item
+          active={totalPages === currentPage}
+          onClick={() => setCurrentPage(totalPages)}
+        >
+          {totalPages}
+        </Pagination.Item>
+      </>
+    )}
+
+    {currentPage < totalPages && (
+      <Pagination.Next onClick={() => setCurrentPage(currentPage + 1)} />
+    )}
+    {currentPage < totalPages && (
+      <Pagination.Last onClick={() => setCurrentPage(totalPages)} />
+    )}
+  </Pagination>
+</div>
+
+        </>
+      ) : (
+        <div
+          className="d-flex justify-content-center"
+          style={{ marginTop: "20px" }}
+        >
+          <p>No results found</p>
+        </div>
+      )}
 
       {/* Show ตรวจสอบข้อมูล */}
       <EditModal
         show={showEditModal}
         onClose={handleCloseEdit}
-        formData={formData} // ส่งข้อมูล item ทั้งหมด
-        id={selectedItem?.id} // ส่ง ID
+        formData={formData}
+        id={selectedItem?.id}
         onInputChange={handleInputChange}
         onSaveChanges={() => {
-          // Handle save changes logic
           console.log("Saving changes for ID:", selectedItem?.id);
-          handleCloseEdit(); // Close modal after saving
+          handleCloseEdit();
         }}
       />
 
