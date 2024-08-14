@@ -23,12 +23,12 @@ function EditModal({ show, onClose, id, onInputChange, onSaveChanges }) {
         `https://bigc-special-project-api-stg-aedsyeswba-as.a.run.app/running72/account/${id}`,
         {
           headers: {
-            'x-api-key': 'line-stg'
-          }
+            "x-api-key": "line-stg",
+          },
         }
       );
       console.log(result.data);
-      setData(result.data.data);  // Assuming data is nested under 'data'
+      setData(result.data.data); // Assuming data is nested under 'data'
     } catch (error) {
       console.error(error);
     }
@@ -49,9 +49,9 @@ function EditModal({ show, onClose, id, onInputChange, onSaveChanges }) {
         updatedData,
         {
           headers: {
-            'x-api-key': 'line-stg',
-            'Content-Type': 'application/json', // Ensure the request is sent as JSON
-          }
+            "x-api-key": "line-stg",
+            "Content-Type": "application/json", // Ensure the request is sent as JSON
+          },
         }
       );
       onSaveChanges(updatedData); // Callback to parent component if needed
@@ -66,7 +66,6 @@ function EditModal({ show, onClose, id, onInputChange, onSaveChanges }) {
   const handlePrint = () => {
     navigate("/invoice", { state: { invoiceData: data } });
   };
-  
 
   const handleEditToggle = () => {
     if (isEditing) {
@@ -78,9 +77,9 @@ function EditModal({ show, onClose, id, onInputChange, onSaveChanges }) {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setData(prevData => ({
+    setData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -90,11 +89,7 @@ function EditModal({ show, onClose, id, onInputChange, onSaveChanges }) {
   };
 
   return (
-    <Modal
-      show={show}
-      onHide={handleClose}
-      dialogClassName="modal-xl"
-    >
+    <Modal show={show} onHide={handleClose} dialogClassName="modal-xl">
       <Modal.Header closeButton>
         <Modal.Title>ข้อมูลผู้สมัคร</Modal.Title>
       </Modal.Header>
@@ -107,7 +102,11 @@ function EditModal({ show, onClose, id, onInputChange, onSaveChanges }) {
                   src={getGoogleDriveImageUrl(extractFileIdFromUrl(data.slip))}
                   alt="Receipt"
                   className="img-fluid"
-                  style={{ maxWidth: "100%", border: "1px solid #dee2e6", borderRadius: "4px" }}
+                  style={{
+                    maxWidth: "100%",
+                    border: "1px solid #dee2e6",
+                    borderRadius: "4px",
+                  }}
                 />
                 <br />
                 <a href={data.slip} target="_blank" rel="noopener noreferrer">
@@ -130,7 +129,12 @@ function EditModal({ show, onClose, id, onInputChange, onSaveChanges }) {
                 onChange={handleInputChange}
                 readOnly={!isEditing}
                 className="form-text"
-                style={{ borderBottom: "1px solid #dee2e6", paddingBottom: "0.5rem", width: "80%", backgroundColor: isEditing ? "#fff" : "#e9ecef" }}
+                style={{
+                  borderBottom: "1px solid #dee2e6",
+                  paddingBottom: "0.5rem",
+                  width: "80%",
+                  backgroundColor: isEditing ? "#fff" : "#e9ecef",
+                }}
               />
             </div>
             <div className="mb-3">
@@ -144,7 +148,12 @@ function EditModal({ show, onClose, id, onInputChange, onSaveChanges }) {
                 onChange={handleInputChange}
                 readOnly={!isEditing}
                 className="form-text"
-                style={{ borderBottom: "1px solid #dee2e6", paddingBottom: "0.5rem", width: "80%", backgroundColor: isEditing ? "#fff" : "#e9ecef" }}
+                style={{
+                  borderBottom: "1px solid #dee2e6",
+                  paddingBottom: "0.5rem",
+                  width: "80%",
+                  backgroundColor: isEditing ? "#fff" : "#e9ecef",
+                }}
               />
             </div>
             <div className="mb-3">
@@ -158,7 +167,12 @@ function EditModal({ show, onClose, id, onInputChange, onSaveChanges }) {
                 onChange={handleInputChange}
                 readOnly={!isEditing}
                 className="form-text"
-                style={{ borderBottom: "1px solid #dee2e6", paddingBottom: "0.5rem", width: "80%", backgroundColor: isEditing ? "#fff" : "#e9ecef" }}
+                style={{
+                  borderBottom: "1px solid #dee2e6",
+                  paddingBottom: "0.5rem",
+                  width: "80%",
+                  backgroundColor: isEditing ? "#fff" : "#e9ecef",
+                }}
               />
             </div>
             <div className="mb-3">
@@ -172,7 +186,12 @@ function EditModal({ show, onClose, id, onInputChange, onSaveChanges }) {
                 onChange={handleInputChange}
                 readOnly={!isEditing}
                 className="form-text"
-                style={{ paddingBottom: "0.5rem", width: "80%", borderBottom: "1px solid #dee2e6", backgroundColor: isEditing ? "#fff" : "#e9ecef" }}
+                style={{
+                  paddingBottom: "0.5rem",
+                  width: "80%",
+                  borderBottom: "1px solid #dee2e6",
+                  backgroundColor: isEditing ? "#fff" : "#e9ecef",
+                }}
               />
             </div>
             <div className="mb-3">
@@ -186,7 +205,11 @@ function EditModal({ show, onClose, id, onInputChange, onSaveChanges }) {
                 onChange={handleInputChange}
                 readOnly={!isEditing}
                 className="form-text"
-                style={{ width: "80%", borderBottom: "1px solid #dee2e6", backgroundColor: isEditing ? "#fff" : "#e9ecef" }}
+                style={{
+                  width: "80%",
+                  borderBottom: "1px solid #dee2e6",
+                  backgroundColor: isEditing ? "#fff" : "#e9ecef",
+                }}
               />
             </div>
             <div className="mb-3">
@@ -200,7 +223,11 @@ function EditModal({ show, onClose, id, onInputChange, onSaveChanges }) {
                 onChange={handleInputChange}
                 readOnly={!isEditing}
                 className="form-text"
-                style={{ paddingBottom: "0.5rem", width: "80%", backgroundColor: isEditing ? "#fff" : "#e9ecef" }}
+                style={{
+                  paddingBottom: "0.5rem",
+                  width: "80%",
+                  backgroundColor: isEditing ? "#fff" : "#e9ecef",
+                }}
               />
             </div>
           </div>
@@ -255,10 +282,19 @@ function EditModal({ show, onClose, id, onInputChange, onSaveChanges }) {
         <Button variant="secondary" onClick={handleClose} disabled={isLoading}>
           Close
         </Button>
-        <Button variant="info" onClick={handleEditToggle} disabled={isLoading}>
+        <Button
+          variant={isEditing ? "success" : "primary"}
+          onClick={handleEditToggle}
+          disabled={isLoading}
+        >
           {isEditing ? "บันทึก" : "แก้ไข"}
         </Button>
-        <Button variant="primary" onClick={handlePrint} disabled={isEditing || isLoading}>
+
+        <Button
+          variant="primary"
+          onClick={handlePrint}
+          disabled={isEditing || isLoading}
+        >
           ใบกำกับภาษี
         </Button>
       </Modal.Footer>
