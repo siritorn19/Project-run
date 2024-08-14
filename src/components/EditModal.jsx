@@ -1,55 +1,116 @@
+import React, { useState, useEffect, useRef } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-import { useEffect, useState } from "react";
-import { extractFileIdFromUrl, getGoogleDriveImageUrl } from "./utils"; // Assume you have utils for these
+import { useNavigate } from "react-router-dom";
+import Axios from "axios";
+import { extractFileIdFromUrl, getGoogleDriveImageUrl } from "./utils";
 
-function EditModal({ show, onClose, formData, id, onInputChange, onSaveChanges }) {
-  const [imageUrl, setImageUrl] = useState("");
+function EditModal({ show, onClose, id, onInputChange, onSaveChanges }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [data, setData] = useState({});
+  const [isLoading, setIsLoading] = useState(false); // To show loading state if needed
+  const navigate = useNavigate();
+  const printRef = useRef();
 
   useEffect(() => {
-    if (formData.slip) {
-      setImageUrl(getGoogleDriveImageUrl(extractFileIdFromUrl(formData.slip)));
+    if (show) {
+      fetchApiData();
     }
-  }, [formData.slip]);
+  }, [show]);
 
-  useEffect(() => {
-    if (id) {
-      // Example: Use the ID to fetch or update additional data if needed
-      console.log("EditModal received ID:", id);
-      // Example: Fetch additional data or set state based on ID
+  const fetchApiData = async () => {
+    try {
+      const result = await Axios.get(
+        `https://bigc-special-project-api-stg-aedsyeswba-as.a.run.app/running72/account/${id}`,
+        {
+          headers: {
+            'x-api-key': 'line-stg'
+          }
+        }
+      );
+      console.log(result.data);
+      setData(result.data.data);  // Assuming data is nested under 'data'
+    } catch (error) {
+      console.error(error);
     }
-  }, [id]);
+  };
+
+  const handleSaveChanges = async () => {
+    setIsLoading(true);
+    try {
+      // Add 'id' and 'timestamp' to the data object before sending it
+      const updatedData = {
+        ...data,
+        id,
+        timestamp: new Date().toLocaleString("en-GB"), // Update with the current timestamp in the desired format
+      };
+
+      await Axios.post(
+        `https://bigc-special-project-api-stg-aedsyeswba-as.a.run.app/running72/account/update`,
+        updatedData,
+        {
+          headers: {
+            'x-api-key': 'line-stg',
+            'Content-Type': 'application/json', // Ensure the request is sent as JSON
+          }
+        }
+      );
+      onSaveChanges(updatedData); // Callback to parent component if needed
+      setIsEditing(false); // Disable editing after saving
+    } catch (error) {
+      console.error("Error saving changes:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handlePrint = () => {
+    navigate("/invoice", { state: { invoiceData: data } });
+  };
+  
+
+  const handleEditToggle = () => {
+    if (isEditing) {
+      handleSaveChanges(); // Save changes when switching from edit mode
+    } else {
+      setIsEditing(true);
+    }
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setData(prevData => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+
+  const handleClose = () => {
+    setIsEditing(false); // Reset isEditing when the modal closes
+    onClose();
+  };
 
   return (
     <Modal
       show={show}
-      onHide={onClose}
-      dialogClassName="modal-xl" // ใช้คลาส modal-xl
+      onHide={handleClose}
+      dialogClassName="modal-xl"
     >
       <Modal.Header closeButton>
         <Modal.Title>ข้อมูลผู้สมัคร</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div className="d-flex">
+        <div className="d-flex" ref={printRef}>
           <div className="w-50 pe-3">
-            {/* ช่องรูปภาพ */}
-            {formData.slip ? (
+            {data.slip ? (
               <div>
                 <img
-                  src={imageUrl}
+                  src={getGoogleDriveImageUrl(extractFileIdFromUrl(data.slip))}
                   alt="Receipt"
                   className="img-fluid"
-                  style={{
-                    maxWidth: "100%",
-                    border: "1px solid #dee2e6",
-                    borderRadius: "4px",
-                  }}
+                  style={{ maxWidth: "100%", border: "1px solid #dee2e6", borderRadius: "4px" }}
                 />
                 <br />
-                <a
-                  href={formData.slip}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a href={data.slip} target="_blank" rel="noopener noreferrer">
                   ดูรูปใบเสร็จ
                 </a>
               </div>
@@ -57,52 +118,148 @@ function EditModal({ show, onClose, formData, id, onInputChange, onSaveChanges }
               <div>ไม่พบรูปใบเสร็จ</div>
             )}
           </div>
-
-          {/* ช่องข้อมูลที่เหลือ */}
           <div className="w-50">
-            {/* Add fields as needed */}
             <div className="mb-3">
               <Form.Label as="h5" className="font-weight-bold">
                 หมายเลขบัตรประชาชน
               </Form.Label>
+              <Form.Control
+                type="text"
+                name="cardId"
+                value={data.card_id || ""}
+                onChange={handleInputChange}
+                readOnly={!isEditing}
+                className="form-text"
+                style={{ borderBottom: "1px solid #dee2e6", paddingBottom: "0.5rem", width: "80%", backgroundColor: isEditing ? "#fff" : "#e9ecef" }}
+              />
+            </div>
+            <div className="mb-3">
+              <Form.Label as="h5" className="font-weight-bold">
+                ชื่อ-สกุล
+              </Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+                value={data.name || ""}
+                onChange={handleInputChange}
+                readOnly={!isEditing}
+                className="form-text"
+                style={{ borderBottom: "1px solid #dee2e6", paddingBottom: "0.5rem", width: "80%", backgroundColor: isEditing ? "#fff" : "#e9ecef" }}
+              />
+            </div>
+            <div className="mb-3">
+              <Form.Label as="h5" className="font-weight-bold">
+                ที่อยู่
+              </Form.Label>
+              <Form.Control
+                type="text"
+                name="address"
+                value={data.address || ""}
+                onChange={handleInputChange}
+                readOnly={!isEditing}
+                className="form-text"
+                style={{ borderBottom: "1px solid #dee2e6", paddingBottom: "0.5rem", width: "80%", backgroundColor: isEditing ? "#fff" : "#e9ecef" }}
+              />
+            </div>
+            <div className="mb-3">
+              <Form.Label as="h5" className="font-weight-bold">
+                เบอร์โทรศัพท์
+              </Form.Label>
+              <Form.Control
+                type="text"
+                name="tel"
+                value={data.tel || ""}
+                onChange={handleInputChange}
+                readOnly={!isEditing}
+                className="form-text"
+                style={{ paddingBottom: "0.5rem", width: "80%", borderBottom: "1px solid #dee2e6", backgroundColor: isEditing ? "#fff" : "#e9ecef" }}
+              />
+            </div>
+            <div className="mb-3">
+              <Form.Label as="h5" className="font-weight-bold">
+                ขนาดเสื้อที่ต้องการ
+              </Form.Label>
+              <Form.Control
+                type="text"
+                name="shirtSize"
+                value={data.shirt_size || ""}
+                onChange={handleInputChange}
+                readOnly={!isEditing}
+                className="form-text"
+                style={{ width: "80%", borderBottom: "1px solid #dee2e6", backgroundColor: isEditing ? "#fff" : "#e9ecef" }}
+              />
+            </div>
+            <div className="mb-3">
+              <Form.Label as="h5" className="font-weight-bold">
+                บัตรเดิน-วิ่ง ระยะ
+              </Form.Label>
+              <Form.Control
+                type="text"
+                name="km"
+                value={data.km || ""}
+                onChange={handleInputChange}
+                readOnly={!isEditing}
+                className="form-text"
+                style={{ paddingBottom: "0.5rem", width: "80%", backgroundColor: isEditing ? "#fff" : "#e9ecef" }}
+              />
+            </div>
+          </div>
+
+          {/* Add the missing sections for status */}
+          <div className="w-50">
+            <div className="mb-3">
+              <Form.Label as="h5" className="font-weight-bold">
+                สถานะรับเสื้อ :
+              </Form.Label>
               <div
                 className="form-text"
                 style={{
-                  borderBottom: "1px solid #dee2e6",
-                  paddingBottom: "0.5rem",
                   width: "80%",
+                  color: data.shirt_status === "รับเสื้อแล้ว" ? "green" : "red",
+                  fontWeight: "bold",
+                  fontSize: "18px",
+                  padding: "0.375rem 0.75rem", // Mimics padding of input
+                  backgroundColor: "#e9ecef",
+                  borderRadius: "4px",
+                  border: "1px solid #ced4da", // Mimics border of input
                 }}
               >
-                {formData.cardId}
+                {data.shirt_status || "ยังไม่ได้รับเสื้อ"}
               </div>
             </div>
 
             <div className="mb-3">
               <Form.Label as="h5" className="font-weight-bold">
-                ชื่อ-สกุล
+                สถานะลงทะเบียน :
               </Form.Label>
               <div
                 className="form-text"
                 style={{
-                  borderBottom: "1px solid #dee2e6",
-                  paddingBottom: "0.5rem",
                   width: "80%",
+                  color: data.status_register === "Completed" ? "green" : "red",
+                  fontWeight: "bold",
+                  fontSize: "18px",
+                  padding: "0.375rem 0.75rem", // Mimics padding of input
+                  backgroundColor: "#e9ecef",
+                  borderRadius: "4px",
+                  border: "1px solid #ced4da", // Mimics border of input
                 }}
               >
-                {formData.name}
+                {data.status_register || "ยังไม่ลงทะเบียน"}
               </div>
             </div>
-
-            {/* Add other fields here */}
           </div>
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={onClose}>
+        <Button variant="secondary" onClick={handleClose} disabled={isLoading}>
           Close
         </Button>
-        <Button variant="primary" onClick={onSaveChanges}>
-          Save Changes
+        <Button variant="info" onClick={handleEditToggle} disabled={isLoading}>
+          {isEditing ? "บันทึก" : "แก้ไข"}
+        </Button>
+        <Button variant="primary" onClick={handlePrint} disabled={isEditing || isLoading}>
+          ใบกำกับภาษี
         </Button>
       </Modal.Footer>
     </Modal>
