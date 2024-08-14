@@ -1,261 +1,112 @@
-import React, { useState, useRef } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-import { useNavigate } from 'react-router-dom';
-import { extractFileIdFromUrl, getGoogleDriveImageUrl } from "./utils";
+import { useEffect, useState } from "react";
+import { extractFileIdFromUrl, getGoogleDriveImageUrl } from "./utils"; // Assume you have utils for these
 
-function EditModal({ show, onClose, formData, onInputChange, onSaveChanges }) {
-    const [isEditing, setIsEditing] = useState(false);
-    const navigate = useNavigate();
-    const printRef = useRef();
+function EditModal({ show, onClose, formData, id, onInputChange, onSaveChanges }) {
+  const [imageUrl, setImageUrl] = useState("");
 
-    const handlePrint = () => {
-        const printContent = printRef.current.innerHTML;
-        const originalContent = document.body.innerHTML;
-        document.body.innerHTML = printContent;
-        window.print();
-        document.body.innerHTML = originalContent;
-        window.location.reload(); // Reload the page to reset the original content
-    };
+  useEffect(() => {
+    if (formData.slip) {
+      setImageUrl(getGoogleDriveImageUrl(extractFileIdFromUrl(formData.slip)));
+    }
+  }, [formData.slip]);
 
-    const handleEditToggle = () => {
-        setIsEditing(!isEditing);
-    };
+  useEffect(() => {
+    if (id) {
+      // Example: Use the ID to fetch or update additional data if needed
+      console.log("EditModal received ID:", id);
+      // Example: Fetch additional data or set state based on ID
+    }
+  }, [id]);
 
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        onInputChange(name, value);
-    };
+  return (
+    <Modal
+      show={show}
+      onHide={onClose}
+      dialogClassName="modal-xl" // ใช้คลาส modal-xl
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>ข้อมูลผู้สมัคร</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <div className="d-flex">
+          <div className="w-50 pe-3">
+            {/* ช่องรูปภาพ */}
+            {formData.slip ? (
+              <div>
+                <img
+                  src={imageUrl}
+                  alt="Receipt"
+                  className="img-fluid"
+                  style={{
+                    maxWidth: "100%",
+                    border: "1px solid #dee2e6",
+                    borderRadius: "4px",
+                  }}
+                />
+                <br />
+                <a
+                  href={formData.slip}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  ดูรูปใบเสร็จ
+                </a>
+              </div>
+            ) : (
+              <div>ไม่พบรูปใบเสร็จ</div>
+            )}
+          </div>
 
-    const handleClose = () => {
-        setIsEditing(false);  // Reset isEditing when the modal closes
-        onClose();
-    };
+          {/* ช่องข้อมูลที่เหลือ */}
+          <div className="w-50">
+            {/* Add fields as needed */}
+            <div className="mb-3">
+              <Form.Label as="h5" className="font-weight-bold">
+                หมายเลขบัตรประชาชน
+              </Form.Label>
+              <div
+                className="form-text"
+                style={{
+                  borderBottom: "1px solid #dee2e6",
+                  paddingBottom: "0.5rem",
+                  width: "80%",
+                }}
+              >
+                {formData.cardId}
+              </div>
+            </div>
 
-    return (
-        <Modal
-            show={show}
-            onHide={handleClose} // Use the new handleClose function here
-            dialogClassName="modal-xl"
-        >
-            <Modal.Header closeButton>
-                <Modal.Title>ข้อมูลผู้สมัคร</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <div className="d-flex" ref={printRef}>
-                    <div className="w-50 pe-3">
-                        {formData.slip ? (
-                            <div>
-                                <img
-                                    src={getGoogleDriveImageUrl(
-                                        extractFileIdFromUrl(formData.slip)
-                                    )}
-                                    alt="Receipt"
-                                    className="img-fluid"
-                                    style={{
-                                        maxWidth: "100%",
-                                        border: "1px solid #dee2e6",
-                                        borderRadius: "4px",
-                                    }}
-                                />
-                                <br />
-                                <a
-                                    href={formData.slip}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    ดูรูปใบเสร็จ
-                                </a>
-                            </div>
-                        ) : (
-                            <div>ไม่พบรูปใบเสร็จ</div>
-                        )}
-                    </div>
+            <div className="mb-3">
+              <Form.Label as="h5" className="font-weight-bold">
+                ชื่อ-สกุล
+              </Form.Label>
+              <div
+                className="form-text"
+                style={{
+                  borderBottom: "1px solid #dee2e6",
+                  paddingBottom: "0.5rem",
+                  width: "80%",
+                }}
+              >
+                {formData.name}
+              </div>
+            </div>
 
-                    <div className="w-50">
-                        <div className="mb-3">
-                            <Form.Label as="h5" className="font-weight-bold">
-                                หมายเลขบัตรประชาชน
-                            </Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="cardId"
-                                value={formData.cardId}
-                                onChange={handleInputChange}
-                                readOnly={!isEditing}
-                                className="form-text"
-                                style={{
-                                    borderBottom: "1px solid #dee2e6",
-                                    paddingBottom: "0.5rem",
-                                    width: "80%",
-                                    backgroundColor: isEditing ? "#fff" : "#e9ecef",
-                                }}
-                            />
-                        </div>
-
-                        <div className="mb-3">
-                            <Form.Label as="h5" className="font-weight-bold">
-                                ชื่อ-สกุล
-                            </Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="name"
-                                value={formData.name}
-                                onChange={handleInputChange}
-                                readOnly={!isEditing}
-                                className="form-text"
-                                style={{
-                                    borderBottom: "1px solid #dee2e6",
-                                    paddingBottom: "0.5rem",
-                                    width: "80%",
-                                    backgroundColor: isEditing ? "#fff" : "#e9ecef",
-                                }}
-                            />
-                        </div>
-
-                        <div className="mb-3">
-                            <Form.Label as="h5" className="font-weight-bold">
-                                ที่อยู่
-                            </Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="address"
-                                value={formData.address}
-                                onChange={handleInputChange}
-                                readOnly={!isEditing}
-                                className="form-text"
-                                style={{
-                                    borderBottom: "1px solid #dee2e6",
-                                    paddingBottom: "0.5rem",
-                                    width: "80%",
-                                    backgroundColor: isEditing ? "#fff" : "#e9ecef",
-                                }}
-                            />
-                        </div>
-
-                        <div className="mb-3">
-                            <Form.Label as="h5" className="font-weight-bold">
-                                เบอร์โทรศัพท์
-                            </Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="tel"
-                                value={formData.tel}
-                                onChange={handleInputChange}
-                                readOnly={!isEditing}
-                                className="form-text"
-                                style={{
-                                    paddingBottom: "0.5rem",
-                                    width: "80%",
-                                    borderBottom: "1px solid #dee2e6",
-                                    backgroundColor: isEditing ? "#fff" : "#e9ecef",
-                                }}
-                            />
-                        </div>
-
-                        <div className="mb-3">
-                            <Form.Label as="h5" className="font-weight-bold">
-                                ขนาดเสื้อที่ต้องการ
-                            </Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="shirtSize"
-                                value={formData.shirtSize}
-                                onChange={handleInputChange}
-                                readOnly={!isEditing}
-                                className="form-text"
-                                style={{
-                                    width: "80%",
-                                    borderBottom: "1px solid #dee2e6",
-                                    backgroundColor: isEditing ? "#fff" : "#e9ecef",
-                                }}
-                            />
-                        </div>
-
-                        <div className="mb-3">
-                            <Form.Label as="h5" className="font-weight-bold">
-                                บัตรเดิน-วิ่ง ระยะ
-                            </Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="km"
-                                value={formData.km}
-                                onChange={handleInputChange}
-                                readOnly={!isEditing}
-                                className="form-text"
-                                style={{
-                                    paddingBottom: "0.5rem",
-                                    width: "80%",
-                                    backgroundColor: isEditing ? "#fff" : "#e9ecef",
-                                }}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="w-50">
-                        <div className="mb-3">
-                            <Form.Label as="h5" className="font-weight-bold">
-                                สถานะรับเสื้อ :
-                            </Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="shirtStatus"
-                                value={formData.shirtStatus}
-                                onChange={handleInputChange}
-                                readOnly={!isEditing}
-                                className="form-text"
-                                style={{
-                                    width: "80%",
-                                    color:
-                                        formData.shirtStatus === "รับเสื้อแล้ว"
-                                            ? "green"
-                                            : "red",
-                                    fontWeight: "bold",
-                                    fontSize: "18px",
-                                    backgroundColor: isEditing ? "#fff" : "#e9ecef",
-                                }}
-                            />
-                        </div>
-
-                        <div className="mb-3">
-                            <Form.Label as="h5" className="font-weight-bold">
-                                สถานะลงทะเบียน :
-                            </Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="statusRegister"
-                                value={formData.statusRegister}
-                                onChange={handleInputChange}
-                                readOnly={!isEditing}
-                                className="form-text"
-                                style={{
-                                    width: "80%",
-                                    color:
-                                        formData.statusRegister ===
-                                        "ลงทะเบียนแล้ว"
-                                            ? "green"
-                                            : "red",
-                                    fontWeight: "bold",
-                                    fontSize: "18px",
-                                    backgroundColor: isEditing ? "#fff" : "#e9ecef",
-                                }}
-                            />
-                        </div>
-                    </div>
-                </div>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
-                <Button variant="info" onClick={handleEditToggle}>
-                    {isEditing ? "Save" : "Edit"}
-                </Button>
-                <Button variant="primary" onClick={handlePrint} disabled={isEditing}>
-                    Print
-                </Button>
-            </Modal.Footer>
-        </Modal>
-    );
+            {/* Add other fields here */}
+          </div>
+        </div>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={onClose}>
+          Close
+        </Button>
+        <Button variant="primary" onClick={onSaveChanges}>
+          Save Changes
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
 }
 
 export default EditModal;
