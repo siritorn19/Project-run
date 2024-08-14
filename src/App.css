@@ -36,3 +36,32 @@
     transform: rotate(360deg);
   }
 }
+@media print {
+  @page {
+    margin: 0; /* Removes the default margin set by the browser */
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  header, footer {
+    display: none; /* Hides any header or footer elements in your HTML */
+  }
+
+  /* Hide the browser's print header and footer */
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .invoice-container {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    page-break-inside: avoid;
+  }
+}

@@ -9,6 +9,7 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
+import Invoice from "./components/InvoicePage";
 
 function App() {
   return (
@@ -21,6 +22,14 @@ function App() {
           element={
             <PrivateRoute>
               <Home />
+            </PrivateRoute>
+          }
+        />
+          <Route
+          path="/invoice"
+          element={
+            <PrivateRoute>
+              <Invoice />
             </PrivateRoute>
           }
         />
