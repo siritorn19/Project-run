@@ -1,7 +1,24 @@
 import { Modal, Button, Form } from "react-bootstrap";
+import { useEffect, useState } from "react";
 import { extractFileIdFromUrl, getGoogleDriveImageUrl } from "./utils"; // Assume you have utils for these
 
-function EditModal({ show, onClose, formData, onInputChange, onSaveChanges }) {
+function EditModal({ show, onClose, formData, id, onInputChange, onSaveChanges }) {
+  const [imageUrl, setImageUrl] = useState("");
+
+  useEffect(() => {
+    if (formData.slip) {
+      setImageUrl(getGoogleDriveImageUrl(extractFileIdFromUrl(formData.slip)));
+    }
+  }, [formData.slip]);
+
+  useEffect(() => {
+    if (id) {
+      // Example: Use the ID to fetch or update additional data if needed
+      console.log("EditModal received ID:", id);
+      // Example: Fetch additional data or set state based on ID
+    }
+  }, [id]);
+
   return (
     <Modal
       show={show}
@@ -14,28 +31,11 @@ function EditModal({ show, onClose, formData, onInputChange, onSaveChanges }) {
       <Modal.Body>
         <div className="d-flex">
           <div className="w-50 pe-3">
-            {/* <div className="mb-3">
-              <Form.Label as="h5" className="font-weight-bold">
-                เวลาที่ลงทะเบียน
-              </Form.Label>
-              <div
-                className="form-text"
-                style={{
-                  borderBottom: "1px solid #dee2e6",
-                  paddingBottom: "0.5rem",
-                  width: "80%",
-                }}
-              >
-                {formData.timestamp}
-              </div>
-            </div> */}
             {/* ช่องรูปภาพ */}
             {formData.slip ? (
               <div>
                 <img
-                  src={getGoogleDriveImageUrl(
-                    extractFileIdFromUrl(formData.slip)
-                  )}
+                  src={imageUrl}
                   alt="Receipt"
                   className="img-fluid"
                   style={{
@@ -60,6 +60,7 @@ function EditModal({ show, onClose, formData, onInputChange, onSaveChanges }) {
 
           {/* ช่องข้อมูลที่เหลือ */}
           <div className="w-50">
+            {/* Add fields as needed */}
             <div className="mb-3">
               <Form.Label as="h5" className="font-weight-bold">
                 หมายเลขบัตรประชาชน
@@ -92,119 +93,16 @@ function EditModal({ show, onClose, formData, onInputChange, onSaveChanges }) {
               </div>
             </div>
 
-            <div className="mb-3">
-              <Form.Label as="h5" className="font-weight-bold">
-                ที่อยู่
-              </Form.Label>
-              <div
-                className="form-text"
-                style={{
-                  borderBottom: "1px solid #dee2e6",
-                  paddingBottom: "0.5rem",
-                  width: "80%",
-                }}
-              >
-                {formData.address}
-              </div>
-            </div>
-
-            <div className="mb-3">
-              <Form.Label as="h5" className="font-weight-bold">
-                เบอร์โทรศัพท์
-              </Form.Label>
-              <div
-                className="form-text"
-                style={{
-                  paddingBottom: "0.5rem",
-                  width: "80%",
-                  borderBottom: "1px solid #dee2e6",
-                }}
-              >
-                {formData.tel}
-              </div>
-            </div>
-            <div className="mb-3">
-              <Form.Label as="h5" className="font-weight-bold">
-                ขนาดเสื้อที่ต้องการ
-              </Form.Label>
-              <div
-                className="form-text"
-                style={{
-                  width: "80%",
-                  borderBottom: "1px solid #dee2e6",
-                }}
-              >
-                <b>{formData.shirtSize}</b>
-              </div>
-            </div>
-
-            <div className="mb-3">
-              <Form.Label as="h5" className="font-weight-bold">
-                บัตรเดิน-วิ่ง ระยะ
-              </Form.Label>
-              <div
-                className="form-text"
-                style={{
-                  paddingBottom: "0.5rem",
-                  width: "80%",
-                }}
-              >
-                {formData.km}
-              </div>
-            </div>
-          </div>
-          {/* ช่องขนาดเสื้อ */}
-          <div className="w-50">
-            <div className="mb-3">
-              <Form.Label as="h5" className="font-weight-bold">
-                สถานะรับเสื้อ :
-              </Form.Label>
-            <div
-              className="form-text"
-              style={{
-                width: "80%",
-                color:
-                  formData.shirtStatus === "รับเสื้อแล้ว" ? "green" : "red",
-                fontWeight: "bold",
-                fontSize: "18px",
-              }}
-            >
-              <b>
-                {formData.shirtStatus
-                  ? formData.shirtStatus
-                  : "ยังไม่ได้รับเสื้อ"}
-              </b>
-            </div>
-            </div>
-            <div className="mb-3">
-              <Form.Label as="h5" className="font-weight-bold">
-                สถานะลงทะเบียน :
-              </Form.Label>
-              <div
-                className="form-text"
-                style={{
-                  width: "80%",
-                  color:
-                    formData.statusRegister === "ลงทะเบียนแล้ว"
-                      ? "green"
-                      : "red",
-                  fontWeight: "bold",
-                  fontSize: "18px",
-                }}
-              >
-                <b>
-                  {formData.statusRegister
-                    ? formData.statusRegister
-                    : "ยังไม่ลงทะเบียน"}
-                </b>
-              </div>
-            </div>
+            {/* Add other fields here */}
           </div>
         </div>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onClose}>
           Close
+        </Button>
+        <Button variant="primary" onClick={onSaveChanges}>
+          Save Changes
         </Button>
       </Modal.Footer>
     </Modal>
