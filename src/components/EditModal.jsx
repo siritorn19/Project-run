@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 import { extractFileIdFromUrl, getGoogleDriveImageUrl } from "./utils";
 
-function EditModal({ show, onClose, id, onInputChange, onSaveChanges }) {
+function EditModal({ show, onClose, id }) {
   const [isEditing, setIsEditing] = useState(false);
   const [data, setData] = useState({});
-  const [isLoading, setIsLoading] = useState(false); // To show loading state if needed
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const printRef = useRef();
 
@@ -23,41 +23,33 @@ function EditModal({ show, onClose, id, onInputChange, onSaveChanges }) {
         `https://bigc-special-project-api-stg-aedsyeswba-as.a.run.app/running72/account/${id}`,
         {
           headers: {
-            "x-api-key": "line-stg",
-          },
+            'x-api-key': 'line-stg'
+          }
         }
       );
       console.log(result.data);
-      setData(result.data.data); // Assuming data is nested under 'data'
+      setData(result.data.data);  // Assuming data is nested under 'data'
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleSaveChanges = async () => {
+  const handleSave = async () => {
     setIsLoading(true);
     try {
-      // Add 'id' and 'timestamp' to the data object before sending it
-      const updatedData = {
-        ...data,
-        id,
-        timestamp: new Date().toLocaleString("en-GB"), // Update with the current timestamp in the desired format
-      };
-
       await Axios.post(
         `https://bigc-special-project-api-stg-aedsyeswba-as.a.run.app/running72/account/update`,
-        updatedData,
+        data,  // Send the updated data
         {
           headers: {
-            "x-api-key": "line-stg",
-            "Content-Type": "application/json", // Ensure the request is sent as JSON
-          },
+            'x-api-key': 'line-stg',
+            'Content-Type': 'application/json'
+          }
         }
       );
-      onSaveChanges(updatedData); // Callback to parent component if needed
-      setIsEditing(false); // Disable editing after saving
+      setIsEditing(false);  // Turn off editing mode after saving
     } catch (error) {
-      console.error("Error saving changes:", error);
+      console.error("Error saving data", error);
     } finally {
       setIsLoading(false);
     }
@@ -69,7 +61,7 @@ function EditModal({ show, onClose, id, onInputChange, onSaveChanges }) {
 
   const handleEditToggle = () => {
     if (isEditing) {
-      handleSaveChanges(); // Save changes when switching from edit mode
+      handleSave();  // Save data when switching out of edit mode
     } else {
       setIsEditing(true);
     }
@@ -77,9 +69,9 @@ function EditModal({ show, onClose, id, onInputChange, onSaveChanges }) {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setData((prevData) => ({
+    setData(prevData => ({
       ...prevData,
-      [name]: value,
+      [name]: value
     }));
   };
 
@@ -89,7 +81,11 @@ function EditModal({ show, onClose, id, onInputChange, onSaveChanges }) {
   };
 
   return (
-    <Modal show={show} onHide={handleClose} dialogClassName="modal-xl">
+    <Modal
+      show={show}
+      onHide={handleClose}
+      dialogClassName="modal-xl"
+    >
       <Modal.Header closeButton>
         <Modal.Title>ข้อมูลผู้สมัคร</Modal.Title>
       </Modal.Header>
@@ -102,11 +98,7 @@ function EditModal({ show, onClose, id, onInputChange, onSaveChanges }) {
                   src={getGoogleDriveImageUrl(extractFileIdFromUrl(data.slip))}
                   alt="Receipt"
                   className="img-fluid"
-                  style={{
-                    maxWidth: "100%",
-                    border: "1px solid #dee2e6",
-                    borderRadius: "4px",
-                  }}
+                  style={{ maxWidth: "100%", border: "1px solid #dee2e6", borderRadius: "4px" }}
                 />
                 <br />
                 <a href={data.slip} target="_blank" rel="noopener noreferrer">
@@ -129,12 +121,7 @@ function EditModal({ show, onClose, id, onInputChange, onSaveChanges }) {
                 onChange={handleInputChange}
                 readOnly={!isEditing}
                 className="form-text"
-                style={{
-                  borderBottom: "1px solid #dee2e6",
-                  paddingBottom: "0.5rem",
-                  width: "80%",
-                  backgroundColor: isEditing ? "#fff" : "#e9ecef",
-                }}
+                style={{ borderBottom: "1px solid #dee2e6", paddingBottom: "0.5rem", width: "80%", backgroundColor: isEditing ? "#fff" : "#e9ecef" }}
               />
             </div>
             <div className="mb-3">
@@ -148,12 +135,7 @@ function EditModal({ show, onClose, id, onInputChange, onSaveChanges }) {
                 onChange={handleInputChange}
                 readOnly={!isEditing}
                 className="form-text"
-                style={{
-                  borderBottom: "1px solid #dee2e6",
-                  paddingBottom: "0.5rem",
-                  width: "80%",
-                  backgroundColor: isEditing ? "#fff" : "#e9ecef",
-                }}
+                style={{ borderBottom: "1px solid #dee2e6", paddingBottom: "0.5rem", width: "80%", backgroundColor: isEditing ? "#fff" : "#e9ecef" }}
               />
             </div>
             <div className="mb-3">
@@ -167,12 +149,7 @@ function EditModal({ show, onClose, id, onInputChange, onSaveChanges }) {
                 onChange={handleInputChange}
                 readOnly={!isEditing}
                 className="form-text"
-                style={{
-                  borderBottom: "1px solid #dee2e6",
-                  paddingBottom: "0.5rem",
-                  width: "80%",
-                  backgroundColor: isEditing ? "#fff" : "#e9ecef",
-                }}
+                style={{ borderBottom: "1px solid #dee2e6", paddingBottom: "0.5rem", width: "80%", backgroundColor: isEditing ? "#fff" : "#e9ecef" }}
               />
             </div>
             <div className="mb-3">
@@ -186,12 +163,7 @@ function EditModal({ show, onClose, id, onInputChange, onSaveChanges }) {
                 onChange={handleInputChange}
                 readOnly={!isEditing}
                 className="form-text"
-                style={{
-                  paddingBottom: "0.5rem",
-                  width: "80%",
-                  borderBottom: "1px solid #dee2e6",
-                  backgroundColor: isEditing ? "#fff" : "#e9ecef",
-                }}
+                style={{ paddingBottom: "0.5rem", width: "80%", borderBottom: "1px solid #dee2e6", backgroundColor: isEditing ? "#fff" : "#e9ecef" }}
               />
             </div>
             <div className="mb-3">
@@ -205,11 +177,7 @@ function EditModal({ show, onClose, id, onInputChange, onSaveChanges }) {
                 onChange={handleInputChange}
                 readOnly={!isEditing}
                 className="form-text"
-                style={{
-                  width: "80%",
-                  borderBottom: "1px solid #dee2e6",
-                  backgroundColor: isEditing ? "#fff" : "#e9ecef",
-                }}
+                style={{ width: "80%", borderBottom: "1px solid #dee2e6", backgroundColor: isEditing ? "#fff" : "#e9ecef" }}
               />
             </div>
             <div className="mb-3">
@@ -223,11 +191,7 @@ function EditModal({ show, onClose, id, onInputChange, onSaveChanges }) {
                 onChange={handleInputChange}
                 readOnly={!isEditing}
                 className="form-text"
-                style={{
-                  paddingBottom: "0.5rem",
-                  width: "80%",
-                  backgroundColor: isEditing ? "#fff" : "#e9ecef",
-                }}
+                style={{ paddingBottom: "0.5rem", width: "80%", backgroundColor: isEditing ? "#fff" : "#e9ecef" }}
               />
             </div>
           </div>
@@ -279,22 +243,13 @@ function EditModal({ show, onClose, id, onInputChange, onSaveChanges }) {
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose} disabled={isLoading}>
+        <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
-        <Button
-          variant={isEditing ? "success" : "primary"}
-          onClick={handleEditToggle}
-          disabled={isLoading}
-        >
+        <Button variant={isEditing ? "info" : "primary"} onClick={handleEditToggle} disabled={isLoading}>
           {isEditing ? "บันทึก" : "แก้ไข"}
         </Button>
-
-        <Button
-          variant="primary"
-          onClick={handlePrint}
-          disabled={isEditing || isLoading}
-        >
+        <Button variant="primary" onClick={handlePrint} disabled={isEditing}>
           ใบกำกับภาษี
         </Button>
       </Modal.Footer>
