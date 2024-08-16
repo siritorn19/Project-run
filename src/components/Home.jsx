@@ -306,7 +306,7 @@ function Home() {
       {currentItems.length > 0 ? (
         <>
           <Table
-            className="table table-striped table-hover"
+            className="table table-striped table-hover table table-bordered"
             style={{ marginTop: "20px" }}
           >
             <thead style={{ fontSize: "18px" }}>
@@ -334,7 +334,6 @@ function Home() {
                     </div>
                   )}
                 </th>
-                <th width="10%"></th>
               </tr>
             </thead>
             <tbody>
@@ -468,7 +467,8 @@ function Home() {
             </tbody>
           </Table>
 
-          {/* Pagination */}
+
+
           {/* Pagination */}
           <div className="d-flex justify-content-center">
             <Pagination>

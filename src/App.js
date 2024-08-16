@@ -11,6 +11,9 @@ import MedalsPage from "./components/MedalsPage";
 import Navbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
 import Invoice from "./components/InvoicePage";
+import Dashboard from "./components/Dashboard";
+import Export from "./components/Export";
+
 
 function App() {
   return (
@@ -39,6 +42,22 @@ function App() {
           element={
             <PrivateRoute>
               <MedalsPage />
+            </PrivateRoute>
+          }
+        />
+         <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/export"
+          element={
+            <PrivateRoute>
+              <Export />
             </PrivateRoute>
           }
         />

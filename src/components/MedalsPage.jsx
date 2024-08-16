@@ -1,9 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { FaSearch, FaTshirt } from "react-icons/fa";
-// import { IoMdContact } from "react-icons/io";
-import { FaMedal } from "react-icons/fa6";
+import { FaSearch, FaTshirt, FaMedal } from "react-icons/fa";
 
 import {
   Container,
@@ -86,12 +84,7 @@ function Home() {
     val.bib_id.toLowerCase().includes(search.toLowerCase())
   );
 
-  // const filteredData = data.filter((val) =>
-  //   Object.values(val).join(" ").toLowerCase().includes(search.toLowerCase())
-  // );
-
   const handleEditClick = (item) => {
-    //console.log("ตรวจสอบข้อมูล ID:", item.id);
     setSelectedItem(item);
     setFormData({
       statusRegister: item.statusRegister || "",
@@ -139,54 +132,7 @@ function Home() {
   };
   
 
-  {
-    /*const handleUpdateClick = async () => {
-    try {
-      selectedIds.forEach(async (ids) => {
-        try {
-          const url = `${process.env.REACT_APP_BACKEND_DOMAIN_API}/running72/account/update/`;
-          const payload = {
-            shirt_status: "Received",
-            contact_name: contactNameData[ids],
-            contact_tel: contactTelData[ids],
-            id: ids,
-          };
-          //console.log(payload);
-          const response = await axios.post(url, payload, {
-            headers: {
-              "x-api-key": process.env.REACT_APP_X_API_KEY,
-            },
-          });
-          if (response.status === 200) {
-            setData((prevData) =>
-              prevData.map((item) =>
-                item.id === ids ? { ...item, shirt_status: "Received" } : item
-              )
-            );
-            setAlertTitle("Success");
-            setAlertMessage("Shirt status updated successfully");
-          } else {
-            setAlertTitle("Error");
-            setAlertMessage("Error updating shirt status");
-          }
-        } catch (error) {
-          console.error("Error updating shirt status:", error);
-          setAlertTitle("Error");
-          setAlertMessage("Error updating shirt status");
-        } finally {
-          setShowAlertModal(true);
-        }
-      });
-    } catch (error) {
-      console.error("Error updating shirt status:", error);
-      setAlertTitle("Error");
-      setAlertMessage("Error updating shirt status");
-    }
-  }; */
-  }
-
-
-  //Update รับเหรียญ
+  {/*Update API รับเหรียญ*/}
   const handleUpdateClick = async () => {
     try {
       const url = `${process.env.REACT_APP_BACKEND_DOMAIN_API}/running72/account/group-finisher`;
@@ -194,8 +140,8 @@ function Home() {
         id: selectedIds,
         finisher_award: "Received",
       };
-      console.log("API URL รับเหรียญ:", url);
-      console.log("Payload:", payload);
+      // console.log("API URL รับเหรียญ:", url);
+      // console.log("Payload:", payload);
 
       const response = await axios.post(url, payload, {
         headers: {
@@ -226,6 +172,7 @@ function Home() {
     }
   };
 
+  {/*Pagination*/}
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 30;
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
@@ -234,6 +181,7 @@ function Home() {
     currentPage * itemsPerPage
   );
 
+  {/*Search*/}
   const handleSearch = async (e) => {
     setSearch(e.target.value);
     setCurrentPage(1);
