@@ -79,30 +79,33 @@ const DashboardTable = () => {
             >
               <tr>
                 <th scope="col" >#</th>
-                <th scope="col" width="3%">S <br />ลงทะเบียนสมัครทั้งหมด</th>
+                <th scope="col" width="3%">S <br />ลงทะเบียนสมัคร</th>
                 <th scope="col" width="3%">S <br />รับเสื้อแล้ว</th>
                 <th scope="col" width="3%">Diff</th>
-                <th scope="col" width="3%">M <br />ลงทะเบียนสมัครทั้งหมด</th>
+                <th scope="col" width="3%">M <br />ลงทะเบียนสมัคร</th>
                 <th scope="col" width="3%">M <br />รับเสื้อแล้ว</th>
                 <th scope="col" width="3%">Diff</th>
-                <th scope="col" width="3%">L <br />ลงทะเบียนสมัครทั้งหมด</th>
+                <th scope="col" width="3%">L <br />ลงทะเบียนสมัคร</th>
                 <th scope="col" width="3%">L <br />รับเสื้อแล้ว</th>
                 <th scope="col" width="3%">Diff</th>
-                <th scope="col" width="3%">XL <br />ลงทะเบียนสมัครทั้งหมด</th>
+                <th scope="col" width="3%">XL <br />ลงทะเบียนสมัคร</th>
                 <th scope="col" width="3%">XL <br />รับเสื้อแล้ว</th>
                 <th scope="col" width="3%">Diff</th>
-                <th scope="col" width="3%">2XL <br />ลงทะเบียนสมัครทั้งหมด</th>
+                <th scope="col" width="3%">2XL <br />ลงทะเบียนสมัคร</th>
                 <th scope="col" width="3%">2XL <br />รับเสื้อแล้ว</th>
                 <th scope="col" width="3%">Diff</th>
-                <th scope="col" width="3%">3XL <br />ลงทะเบียนสมัครทั้งหมด</th>
+                <th scope="col" width="3%">3XL <br />ลงทะเบียนสมัคร</th>
                 <th scope="col" width="3%">3XL <br />รับเสื้อแล้ว</th>
                 <th scope="col" width="3%">Diff</th>
-                <th scope="col" width="3%">4XL <br />ลงทะเบียนสมัครทั้งหมด</th>
+                <th scope="col" width="3%">4XL <br />ลงทะเบียนสมัคร</th>
                 <th scope="col" width="3%">4XL <br />รับเสื้อแล้ว</th>
                 <th scope="col" width="3%">Diff</th>
-                <th scope="col" width="3%">6XL <br />ลงทะเบียนสมัครทั้งหมด</th>
+                <th scope="col" width="3%">6XL <br />ลงทะเบียนสมัคร</th>
                 <th scope="col" width="3%">6XL <br />รับเสื้อแล้ว</th>
                 <th scope="col" width="3%">Diff</th>
+                <th scope="col" width="3%">Total <br />ลงทะเบียนสมัคร</th>
+                <th scope="col" width="3%">Total <br />รับเสื้อแล้ว</th>
+                <th scope="col" width="3%">Total Diff</th>
               </tr>
             </thead>
             <tbody
@@ -112,7 +115,7 @@ const DashboardTable = () => {
               <tr style={{
                 textAlign: "left",
               }}>
-                <th scope="row" colspan="25">พนักงาน</th>
+                <th scope="row" colspan="28">พนักงาน</th>
               </tr>
               <tr>
                 <th scope="row">10 KM</th>
@@ -140,6 +143,14 @@ const DashboardTable = () => {
                 <th scope="col">{data.all ? data.all.nomal_10_6XL_employee : '0'}</th>
                 <th scope="col">{data.shirt_received ? data.shirt_received.nomal_10_6XL_employee : '0'}</th>
                 <th scope="col">{parseInt(data.all ? data.all.nomal_10_6XL_employee : '0') - parseInt(data.shirt_received ? data.shirt_received.nomal_10_6XL_employee : '0')}</th>
+                <th scope="col">{data.all ? data.all.sum_nomal_10_employee : '0'}</th>
+                <th scope="col">{data.shirt_received ? data.shirt_received.sum_nomal_10_employee : '0'}</th>
+                <th scope="col">{
+                  parseInt(data.all ? data.all.sum_nomal_10_employee : '0') -
+                  parseInt(data.shirt_received ? data.shirt_received.sum_nomal_10_employee : '0')
+                }
+                </th>
+
               </tr>
               <tr>
                 <th scope="row">5 KM</th>
@@ -167,6 +178,13 @@ const DashboardTable = () => {
                 <th scope="col">{data.all ? data.all.nomal_5_6XL_employee : '0'}</th>
                 <th scope="col">{data.shirt_received ? data.shirt_received.nomal_5_6XL_employee : '0'}</th>
                 <th scope="col">{parseInt(data.all ? data.all.nomal_5_6XL_employee : '0') - parseInt(data.shirt_received ? data.shirt_received.nomal_5_6XL_employee : '0')}</th>
+                <th scope="col">{data.all ? data.all.sum_nomal_5_employee : '0'}</th>
+                <th scope="col">{data.shirt_received ? data.shirt_received.sum_nomal_5_employee : '0'}</th>
+                <th scope="col">{
+                  parseInt(data.all ? data.all.sum_nomal_5_employee : '0') -
+                  parseInt(data.shirt_received ? data.shirt_received.sum_nomal_5_employee : '0')
+                }
+                </th>
               </tr>
               <tr>
                 <th scope="row">2.5 KM</th>
@@ -194,11 +212,18 @@ const DashboardTable = () => {
                 <th scope="col">{data.all ? data.all.nomal_2_5_6XL_employee : '0'}</th>
                 <th scope="col">{data.shirt_received ? data.shirt_received.nomal_2_5_6XL_employee : '0'}</th>
                 <th scope="col">{parseInt(data.all ? data.all.nomal_2_5_6XL_employee : '0') - parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_6XL_employee : '0')}</th>
+                <th scope="col">{data.all ? data.all.sum_nomal_2_5_employee : '0'}</th>
+                <th scope="col">{data.shirt_received ? data.shirt_received.sum_nomal_2_5_employee : '0'}</th>
+                <th scope="col">{
+                  parseInt(data.all ? data.all.sum_nomal_2_5_employee : '0') -
+                  parseInt(data.shirt_received ? data.shirt_received.sum_nomal_2_5_employee : '0')
+                }
+                </th>
               </tr>
               <tr style={{
                 textAlign: "left",
               }}>
-                <th scope="row" colspan="25">พนักงาน VIP</th>
+                <th scope="row" colspan="28">พนักงาน VIP</th>
               </tr>
               <tr>
                 <th scope="row">10 KM</th>
@@ -226,6 +251,13 @@ const DashboardTable = () => {
                 <th scope="col">{data.all ? data.all.vip_10_6XL_employee : '0'}</th>
                 <th scope="col">{data.shirt_received ? data.shirt_received.vip_10_6XL_employee : '0'}</th>
                 <th scope="col">{parseInt(data.all ? data.all.vip_10_6XL_employee : '0') - parseInt(data.shirt_received ? data.shirt_received.vip_10_6XL_employee : '0')}</th>
+                <th scope="col">{data.all ? data.all.sum_vip_10_employee : '0'}</th>
+                <th scope="col">{data.shirt_received ? data.shirt_received.sum_vip_10_employee : '0'}</th>
+                <th scope="col">{
+                  parseInt(data.all ? data.all.sum_vip_10_employee : '0') -
+                  parseInt(data.shirt_received ? data.shirt_received.sum_vip_10_employee : '0')
+                }
+                </th>
               </tr>
               <tr>
                 <th scope="row">5 KM</th>
@@ -253,6 +285,13 @@ const DashboardTable = () => {
                 <th scope="col">{data.all ? data.all.vip_5_6XL_employee : '0'}</th>
                 <th scope="col">{data.shirt_received ? data.shirt_received.vip_5_6XL_employee : '0'}</th>
                 <th scope="col">{parseInt(data.all ? data.all.vip_5_6XL_employee : '0') - parseInt(data.shirt_received ? data.shirt_received.vip_5_6XL_employee : '0')}</th>
+                <th scope="col">{data.all ? data.all.sum_vip_5_employee : '0'}</th>
+                <th scope="col">{data.shirt_received ? data.shirt_received.sum_vip_5_employee : '0'}</th>
+                <th scope="col">{
+                  parseInt(data.all ? data.all.sum_vip_5_employee : '0') -
+                  parseInt(data.shirt_received ? data.shirt_received.sum_vip_5_employee : '0')
+                }
+                </th>
               </tr>
               <tr>
                 <th scope="row">2.5 KM</th>
@@ -280,11 +319,18 @@ const DashboardTable = () => {
                 <th scope="col">{data.all ? data.all.vip_2_5_6XL_employee : '0'}</th>
                 <th scope="col">{data.shirt_received ? data.shirt_received.vip_2_5_6XL_employee : '0'}</th>
                 <th scope="col">{parseInt(data.all ? data.all.vip_2_5_6XL_employee : '0') - parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_6XL_employee : '0')}</th>
+                <th scope="col">{data.all ? data.all.sum_vip_2_5_employee : '0'}</th>
+                <th scope="col">{data.shirt_received ? data.shirt_received.sum_vip_2_5_employee : '0'}</th>
+                <th scope="col">{
+                  parseInt(data.all ? data.all.sum_vip_2_5_employee : '0') -
+                  parseInt(data.shirt_received ? data.shirt_received.sum_vip_2_5_employee : '0')
+                }
+                </th>
               </tr>
               <tr style={{
                 textAlign: "left",
               }}>
-                <th scope="row" colspan="25">ลูกค้าทั่วไป</th>
+                <th scope="row" colspan="28">ลูกค้าทั่วไป</th>
               </tr>
               <tr>
                 <th scope="row">10 KM</th>
@@ -312,6 +358,13 @@ const DashboardTable = () => {
                 <th scope="col">{data.all ? data.all.nomal_10_6XL : '0'}</th>
                 <th scope="col">{data.shirt_received ? data.shirt_received.nomal_10_6XL : '0'}</th>
                 <th scope="col">{parseInt(data.all ? data.all.nomal_10_6XL : '0') - parseInt(data.shirt_received ? data.shirt_received.nomal_10_6XL : '0')}</th>
+                <th scope="col">{data.all ? data.all.sum_nomal_10 : '0'}</th>
+                <th scope="col">{data.shirt_received ? data.shirt_received.sum_nomal_10 : '0'}</th>
+                <th scope="col">{
+                  parseInt(data.all ? data.all.sum_nomal_10 : '0') -
+                  parseInt(data.shirt_received ? data.shirt_received.sum_nomal_10 : '0')
+                }
+                </th>
               </tr>
               <tr>
                 <th scope="row">5 KM</th>
@@ -339,6 +392,13 @@ const DashboardTable = () => {
                 <th scope="col">{data.all ? data.all.nomal_5_6XL : '0'}</th>
                 <th scope="col">{data.shirt_received ? data.shirt_received.nomal_5_6XL : '0'}</th>
                 <th scope="col">{parseInt(data.all ? data.all.nomal_5_6XL : '0') - parseInt(data.shirt_received ? data.shirt_received.nomal_5_6XL : '0')}</th>
+                <th scope="col">{data.all ? data.all.sum_nomal_5 : '0'}</th>
+                <th scope="col">{data.shirt_received ? data.shirt_received.sum_nomal_5 : '0'}</th>
+                <th scope="col">{
+                  parseInt(data.all ? data.all.sum_nomal_5 : '0') -
+                  parseInt(data.shirt_received ? data.shirt_received.sum_nomal_5 : '0')
+                }
+                </th>
               </tr>
               <tr>
                 <th scope="row">2.5 KM</th>
@@ -366,11 +426,18 @@ const DashboardTable = () => {
                 <th scope="col">{data.all ? data.all.nomal_2_5_6XL : '0'}</th>
                 <th scope="col">{data.shirt_received ? data.shirt_received.nomal_2_5_6XL : '0'}</th>
                 <th scope="col">{parseInt(data.all ? data.all.nomal_2_5_6XL : '0') - parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_6XL : '0')}</th>
+                <th scope="col">{data.all ? data.all.sum_nomal_2_5 : '0'}</th>
+                <th scope="col">{data.shirt_received ? data.shirt_received.sum_nomal_2_5 : '0'}</th>
+                <th scope="col">{
+                  parseInt(data.all ? data.all.sum_nomal_2_5 : '0') -
+                  parseInt(data.shirt_received ? data.shirt_received.sum_nomal_2_5 : '0')
+                }
+                </th>
               </tr>
               <tr style={{
                 textAlign: "left",
               }}>
-                <th scope="row" colspan="25">ลูกค้าทั่วไป VIP</th>
+                <th scope="row" colspan="28">ลูกค้าทั่วไป VIP</th>
               </tr>
               <tr>
                 <th scope="row">10 KM</th>
@@ -398,6 +465,13 @@ const DashboardTable = () => {
                 <th scope="col">{data.all ? data.all.vip_10_6XL : '0'}</th>
                 <th scope="col">{data.shirt_received ? data.shirt_received.vip_10_6XL : '0'}</th>
                 <th scope="col">{parseInt(data.all ? data.all.vip_10_6XL : '0') - parseInt(data.shirt_received ? data.shirt_received.vip_10_6XL : '0')}</th>
+                <th scope="col">{data.all ? data.all.sum_vip_10 : '0'}</th>
+                <th scope="col">{data.shirt_received ? data.shirt_received.sum_vip_10 : '0'}</th>
+                <th scope="col">{
+                  parseInt(data.all ? data.all.sum_vip_10 : '0') -
+                  parseInt(data.shirt_received ? data.shirt_received.sum_vip_10 : '0')
+                }
+                </th>
               </tr>
               <tr>
                 <th scope="row">5 KM</th>
@@ -425,6 +499,14 @@ const DashboardTable = () => {
                 <th scope="col">{data.all ? data.all.vip_5_6XL : '0'}</th>
                 <th scope="col">{data.shirt_received ? data.shirt_received.vip_5_6XL : '0'}</th>
                 <th scope="col">{parseInt(data.all ? data.all.vip_5_6XL : '0') - parseInt(data.shirt_received ? data.shirt_received.vip_5_6XL : '0')}</th>
+                <th scope="col">{data.all ? data.all.sum_vip_5 : '0'}</th>
+                <th scope="col">{data.shirt_received ? data.shirt_received.sum_vip_5 : '0'}</th>
+                <th scope="col">{
+                  parseInt(data.all ? data.all.sum_vip_5 : '0') -
+                  parseInt(data.shirt_received ? data.shirt_received.sum_vip_5 : '0')
+                }
+                </th>
+
               </tr>
               <tr>
                 <th scope="row">2.5 KM</th>
@@ -452,13 +534,19 @@ const DashboardTable = () => {
                 <th scope="col">{data.all ? data.all.vip_2_5_6XL : '0'}</th>
                 <th scope="col">{data.shirt_received ? data.shirt_received.vip_2_5_6XL : '0'}</th>
                 <th scope="col">{parseInt(data.all ? data.all.vip_2_5_6XL : '0') - parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_6XL : '0')}</th>
+                <th scope="col">{data.all ? data.all.sum_vip_2_5 : '0'}</th>
+                <th scope="col">{data.shirt_received ? data.shirt_received.sum_vip_2_5 : '0'}</th>
+                <th scope="col">{
+                  parseInt(data.all ? data.all.sum_vip_2_5 : '0') -
+                  parseInt(data.shirt_received ? data.shirt_received.sum_vip_2_5 : '0')
+                }
+                </th>
               </tr>
-             {/*} <tr>
+              <tr>
                 <th scope="row" style={{
                   textAlign: "left",
                 }}>Total</th>
                 <th scope="col">{
-
                   parseInt(data.all ? data.all.vip_2_5_S : '0') +
                   parseInt(data.all ? data.all.vip_5_S : '0') +
                   parseInt(data.all ? data.all.vip_10_S : '0') +
@@ -471,10 +559,8 @@ const DashboardTable = () => {
                   parseInt(data.all ? data.all.nomal_2_5_S_employee : '0') +
                   parseInt(data.all ? data.all.nomal_5_S_employee : '0') +
                   parseInt(data.all ? data.all.nomal_10_S_employee : '0')}
-
                 </th>
                 <th scope="col">{
-
                   parseInt(data.shirt_received ? data.shirt_received.vip_2_5_S : '0') +
                   parseInt(data.shirt_received ? data.shirt_received.vip_5_S : '0') +
                   parseInt(data.shirt_received ? data.shirt_received.vip_10_S : '0') +
@@ -488,30 +574,517 @@ const DashboardTable = () => {
                   parseInt(data.shirt_received ? data.shirt_received.nomal_5_S_employee : '0') +
                   parseInt(data.shirt_received ? data.shirt_received.nomal_10_S_employee : '0')}
 
-                </th>                
-                <th scope="col">{parseInt(data.all ? data.all.vip_2_5_S : '0') - parseInt(data.shirt_received ? data.shirt_received.vip_2_5_S : '0')}</th>
-                <th scope="col">{data.all ? data.all.vip_2_5_M : '0'}</th>
-                <th scope="col">{data.shirt_received ? data.shirt_received.vip_2_5_M : '0'}</th>
-                <th scope="col">{parseInt(data.all ? data.all.vip_2_5_M : '0') - parseInt(data.shirt_received ? data.shirt_received.vip_2_5_M : '0')}</th>
-                <th scope="col">{data.all ? data.all.vip_2_5_L : '0'}</th>
-                <th scope="col">{data.shirt_received ? data.shirt_received.vip_2_5_L : '0'}</th>
-                <th scope="col">{parseInt(data.all ? data.all.vip_2_5_L : '0') - parseInt(data.shirt_received ? data.shirt_received.vip_2_5_L : '0')}</th>
-                <th scope="col">{data.all ? data.all.vip_2_5_XL : '0'}</th>
-                <th scope="col">{data.shirt_received ? data.shirt_received.vip_2_5_XL : '0'}</th>
-                <th scope="col">{parseInt(data.all ? data.all.vip_2_5_XL : '0') - parseInt(data.shirt_received ? data.shirt_received.vip_2_5_XL : '0')}</th>
-                <th scope="col">{data.all ? data.all.vip_2_5_2XL : '0'}</th>
-                <th scope="col">{data.shirt_received ? data.shirt_received.vip_2_5_2XL : '0'}</th>
-                <th scope="col">{parseInt(data.all ? data.all.vip_2_5_2XL : '0') - parseInt(data.shirt_received ? data.shirt_received.vip_2_5_2XL : '0')}</th>
-                <th scope="col">{data.all ? data.all.vip_2_5_3XL : '0'}</th>
-                <th scope="col">{data.shirt_received ? data.shirt_received.vip_2_5_3XL : '0'}</th>
-                <th scope="col">{parseInt(data.all ? data.all.vip_2_5_3XL : '0') - parseInt(data.shirt_received ? data.shirt_received.vip_2_5_3XL : '0')}</th>
-                <th scope="col">{data.all ? data.all.vip_2_5_4XL : '0'}</th>
-                <th scope="col">{data.shirt_received ? data.shirt_received.vip_2_5_4XL : '0'}</th>
-                <th scope="col">{parseInt(data.all ? data.all.vip_2_5_4XL : '0') - parseInt(data.shirt_received ? data.shirt_received.vip_2_5_4XL : '0')}</th>
-                <th scope="col">{data.all ? data.all.vip_2_5_6XL : '0'}</th>
-                <th scope="col">{data.shirt_received ? data.shirt_received.vip_2_5_6XL : '0'}</th>
-                <th scope="col">{parseInt(data.all ? data.all.vip_2_5_6XL : '0') - parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_6XL : '0')}</th>
-              </tr>*/}
+                </th>
+                <th scope="col">
+                  {
+
+                    (parseInt(data.all ? data.all.vip_2_5_S : '0') +
+                      parseInt(data.all ? data.all.vip_5_S : '0') +
+                      parseInt(data.all ? data.all.vip_10_S : '0') +
+                      parseInt(data.all ? data.all.vip_2_5_S_employee : '0') +
+                      parseInt(data.all ? data.all.vip_5_S_employee : '0') +
+                      parseInt(data.all ? data.all.vip_10_S_employee : '0') +
+                      parseInt(data.all ? data.all.nomal_2_5_S : '0') +
+                      parseInt(data.all ? data.all.nomal_5_S : '0') +
+                      parseInt(data.all ? data.all.nomal_10_S : '0') +
+                      parseInt(data.all ? data.all.nomal_2_5_S_employee : '0') +
+                      parseInt(data.all ? data.all.nomal_5_S_employee : '0') +
+                      parseInt(data.all ? data.all.nomal_10_S_employee : '0')) -
+                    (parseInt(data.shirt_received ? data.shirt_received.vip_2_5_S : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_S : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_S : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_2_5_S_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_S_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_S_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_S : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_S : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_S : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_S_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_S_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_S_employee : '0'))
+                  }
+                </th>
+
+                <th scope="col">{
+                  parseInt(data.all ? data.all.vip_2_5_M : '0') +
+                  parseInt(data.all ? data.all.vip_5_M : '0') +
+                  parseInt(data.all ? data.all.vip_10_M : '0') +
+                  parseInt(data.all ? data.all.vip_2_5_M_employee : '0') +
+                  parseInt(data.all ? data.all.vip_5_M_employee : '0') +
+                  parseInt(data.all ? data.all.vip_10_M_employee : '0') +
+                  parseInt(data.all ? data.all.nomal_2_5_M : '0') +
+                  parseInt(data.all ? data.all.nomal_5_M : '0') +
+                  parseInt(data.all ? data.all.nomal_10_M : '0') +
+                  parseInt(data.all ? data.all.nomal_2_5_M_employee : '0') +
+                  parseInt(data.all ? data.all.nomal_5_M_employee : '0') +
+                  parseInt(data.all ? data.all.nomal_10_M_employee : '0')}
+
+                </th>
+                <th scope="col">{
+
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_M : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_M : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_M : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_M_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_M_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_M_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_M : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_M : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_M : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_M_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_M_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_M_employee : '0')}
+
+                </th>
+                <th scope="col">
+                  {
+
+                    (parseInt(data.all ? data.all.vip_2_5_M : '0') +
+                      parseInt(data.all ? data.all.vip_5_M : '0') +
+                      parseInt(data.all ? data.all.vip_10_M : '0') +
+                      parseInt(data.all ? data.all.vip_2_5_M_employee : '0') +
+                      parseInt(data.all ? data.all.vip_5_M_employee : '0') +
+                      parseInt(data.all ? data.all.vip_10_M_employee : '0') +
+                      parseInt(data.all ? data.all.nomal_2_5_M : '0') +
+                      parseInt(data.all ? data.all.nomal_5_M : '0') +
+                      parseInt(data.all ? data.all.nomal_10_M : '0') +
+                      parseInt(data.all ? data.all.nomal_2_5_M_employee : '0') +
+                      parseInt(data.all ? data.all.nomal_5_M_employee : '0') +
+                      parseInt(data.all ? data.all.nomal_10_M_employee : '0')) -
+                    (parseInt(data.shirt_received ? data.shirt_received.vip_2_5_M : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_M : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_M : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_2_5_M_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_M_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_M_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_M : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_M : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_M : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_M_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_M_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_M_employee : '0'))
+                  }
+                </th>
+                <th scope="col">{
+                  parseInt(data.all ? data.all.vip_2_5_L : '0') +
+                  parseInt(data.all ? data.all.vip_5_L : '0') +
+                  parseInt(data.all ? data.all.vip_10_L : '0') +
+                  parseInt(data.all ? data.all.vip_2_5_L_employee : '0') +
+                  parseInt(data.all ? data.all.vip_5_L_employee : '0') +
+                  parseInt(data.all ? data.all.vip_10_L_employee : '0') +
+                  parseInt(data.all ? data.all.nomal_2_5_L : '0') +
+                  parseInt(data.all ? data.all.nomal_5_L : '0') +
+                  parseInt(data.all ? data.all.nomal_10_L : '0') +
+                  parseInt(data.all ? data.all.nomal_2_5_L_employee : '0') +
+                  parseInt(data.all ? data.all.nomal_5_L_employee : '0') +
+                  parseInt(data.all ? data.all.nomal_10_L_employee : '0')}
+
+                </th>
+                <th scope="col">{
+
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_L : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_L : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_L : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_L_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_L_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_L_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_L : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_L : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_L : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_L_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_L_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_L_employee : '0')}
+
+                </th>
+                <th scope="col">
+                  {
+
+                    (parseInt(data.all ? data.all.vip_2_5_L : '0') +
+                      parseInt(data.all ? data.all.vip_5_L : '0') +
+                      parseInt(data.all ? data.all.vip_10_L : '0') +
+                      parseInt(data.all ? data.all.vip_2_5_L_employee : '0') +
+                      parseInt(data.all ? data.all.vip_5_L_employee : '0') +
+                      parseInt(data.all ? data.all.vip_10_L_employee : '0') +
+                      parseInt(data.all ? data.all.nomal_2_5_L : '0') +
+                      parseInt(data.all ? data.all.nomal_5_L : '0') +
+                      parseInt(data.all ? data.all.nomal_10_L : '0') +
+                      parseInt(data.all ? data.all.nomal_2_5_L_employee : '0') +
+                      parseInt(data.all ? data.all.nomal_5_L_employee : '0') +
+                      parseInt(data.all ? data.all.nomal_10_L_employee : '0')) -
+                    (parseInt(data.shirt_received ? data.shirt_received.vip_2_5_L : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_L : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_L : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_2_5_L_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_L_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_L_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_L : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_L : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_L : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_L_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_L_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_L_employee : '0'))
+                  }
+                </th>
+                <th scope="col">{
+                  parseInt(data.all ? data.all.vip_2_5_XL : '0') +
+                  parseInt(data.all ? data.all.vip_5_XL : '0') +
+                  parseInt(data.all ? data.all.vip_10_XL : '0') +
+                  parseInt(data.all ? data.all.vip_2_5_XL_employee : '0') +
+                  parseInt(data.all ? data.all.vip_5_XL_employee : '0') +
+                  parseInt(data.all ? data.all.vip_10_XL_employee : '0') +
+                  parseInt(data.all ? data.all.nomal_2_5_XL : '0') +
+                  parseInt(data.all ? data.all.nomal_5_XL : '0') +
+                  parseInt(data.all ? data.all.nomal_10_XL : '0') +
+                  parseInt(data.all ? data.all.nomal_2_5_XL_employee : '0') +
+                  parseInt(data.all ? data.all.nomal_5_XL_employee : '0') +
+                  parseInt(data.all ? data.all.nomal_10_XL_employee : '0')}
+
+                </th>
+                <th scope="col">{
+
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_XL_employee : '0')}
+
+                </th>
+                <th scope="col">
+                  {
+
+                    (parseInt(data.all ? data.all.vip_2_5_XL : '0') +
+                      parseInt(data.all ? data.all.vip_5_XL : '0') +
+                      parseInt(data.all ? data.all.vip_10_XL : '0') +
+                      parseInt(data.all ? data.all.vip_2_5_XL_employee : '0') +
+                      parseInt(data.all ? data.all.vip_5_XL_employee : '0') +
+                      parseInt(data.all ? data.all.vip_10_XL_employee : '0') +
+                      parseInt(data.all ? data.all.nomal_2_5_XL : '0') +
+                      parseInt(data.all ? data.all.nomal_5_XL : '0') +
+                      parseInt(data.all ? data.all.nomal_10_XL : '0') +
+                      parseInt(data.all ? data.all.nomal_2_5_XL_employee : '0') +
+                      parseInt(data.all ? data.all.nomal_5_XL_employee : '0') +
+                      parseInt(data.all ? data.all.nomal_10_XL_employee : '0')) -
+                    (parseInt(data.shirt_received ? data.shirt_received.vip_2_5_XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_2_5_XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_XL_employee : '0'))
+                  }
+                </th>
+                <th scope="col">{
+                  parseInt(data.all ? data.all.vip_2_5_2XL : '0') +
+                  parseInt(data.all ? data.all.vip_5_2XL : '0') +
+                  parseInt(data.all ? data.all.vip_10_2XL : '0') +
+                  parseInt(data.all ? data.all.vip_2_5_2XL_employee : '0') +
+                  parseInt(data.all ? data.all.vip_5_2XL_employee : '0') +
+                  parseInt(data.all ? data.all.vip_10_2XL_employee : '0') +
+                  parseInt(data.all ? data.all.nomal_2_5_2XL : '0') +
+                  parseInt(data.all ? data.all.nomal_5_2XL : '0') +
+                  parseInt(data.all ? data.all.nomal_10_2XL : '0') +
+                  parseInt(data.all ? data.all.nomal_2_5_2XL_employee : '0') +
+                  parseInt(data.all ? data.all.nomal_5_2XL_employee : '0') +
+                  parseInt(data.all ? data.all.nomal_10_2XL_employee : '0')}
+
+                </th>
+                <th scope="col">{
+
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_2XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_2XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_2XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_2XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_2XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_2XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_2XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_2XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_2XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_2XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_2XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_2XL_employee : '0')}
+
+                </th>
+                <th scope="col">
+                  {
+
+                    (parseInt(data.all ? data.all.vip_2_5_2XL : '0') +
+                      parseInt(data.all ? data.all.vip_5_2XL : '0') +
+                      parseInt(data.all ? data.all.vip_10_2XL : '0') +
+                      parseInt(data.all ? data.all.vip_2_5_2XL_employee : '0') +
+                      parseInt(data.all ? data.all.vip_5_2XL_employee : '0') +
+                      parseInt(data.all ? data.all.vip_10_2XL_employee : '0') +
+                      parseInt(data.all ? data.all.nomal_2_5_2XL : '0') +
+                      parseInt(data.all ? data.all.nomal_5_2XL : '0') +
+                      parseInt(data.all ? data.all.nomal_10_2XL : '0') +
+                      parseInt(data.all ? data.all.nomal_2_5_2XL_employee : '0') +
+                      parseInt(data.all ? data.all.nomal_5_2XL_employee : '0') +
+                      parseInt(data.all ? data.all.nomal_10_2XL_employee : '0')) -
+                    (parseInt(data.shirt_received ? data.shirt_received.vip_2_5_2XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_2XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_2XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_2_5_2XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_2XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_2XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_2XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_2XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_2XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_2XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_2XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_2XL_employee : '0'))
+                  }
+                </th>
+                <th scope="col">{
+                  parseInt(data.all ? data.all.vip_2_5_3XL : '0') +
+                  parseInt(data.all ? data.all.vip_5_3XL : '0') +
+                  parseInt(data.all ? data.all.vip_10_3XL : '0') +
+                  parseInt(data.all ? data.all.vip_2_5_3XL_employee : '0') +
+                  parseInt(data.all ? data.all.vip_5_3XL_employee : '0') +
+                  parseInt(data.all ? data.all.vip_10_3XL_employee : '0') +
+                  parseInt(data.all ? data.all.nomal_2_5_3XL : '0') +
+                  parseInt(data.all ? data.all.nomal_5_3XL : '0') +
+                  parseInt(data.all ? data.all.nomal_10_3XL : '0') +
+                  parseInt(data.all ? data.all.nomal_2_5_3XL_employee : '0') +
+                  parseInt(data.all ? data.all.nomal_5_3XL_employee : '0') +
+                  parseInt(data.all ? data.all.nomal_10_3XL_employee : '0')}
+
+                </th>
+                <th scope="col">{
+
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_3XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_3XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_3XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_3XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_3XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_3XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_3XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_3XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_3XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_3XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_3XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_3XL_employee : '0')}
+
+                </th>
+                <th scope="col">
+                  {
+
+                    (parseInt(data.all ? data.all.vip_2_5_3XL : '0') +
+                      parseInt(data.all ? data.all.vip_5_3XL : '0') +
+                      parseInt(data.all ? data.all.vip_10_3XL : '0') +
+                      parseInt(data.all ? data.all.vip_2_5_3XL_employee : '0') +
+                      parseInt(data.all ? data.all.vip_5_3XL_employee : '0') +
+                      parseInt(data.all ? data.all.vip_10_3XL_employee : '0') +
+                      parseInt(data.all ? data.all.nomal_2_5_3XL : '0') +
+                      parseInt(data.all ? data.all.nomal_5_3XL : '0') +
+                      parseInt(data.all ? data.all.nomal_10_3XL : '0') +
+                      parseInt(data.all ? data.all.nomal_2_5_3XL_employee : '0') +
+                      parseInt(data.all ? data.all.nomal_5_3XL_employee : '0') +
+                      parseInt(data.all ? data.all.nomal_10_3XL_employee : '0')) -
+                    (parseInt(data.shirt_received ? data.shirt_received.vip_2_5_3XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_3XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_3XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_2_5_3XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_3XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_3XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_3XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_3XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_3XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_3XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_3XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_3XL_employee : '0'))
+                  }
+                </th>
+                <th scope="col">{
+                  parseInt(data.all ? data.all.vip_2_5_4XL : '0') +
+                  parseInt(data.all ? data.all.vip_5_4XL : '0') +
+                  parseInt(data.all ? data.all.vip_10_4XL : '0') +
+                  parseInt(data.all ? data.all.vip_2_5_4XL_employee : '0') +
+                  parseInt(data.all ? data.all.vip_5_4XL_employee : '0') +
+                  parseInt(data.all ? data.all.vip_10_4XL_employee : '0') +
+                  parseInt(data.all ? data.all.nomal_2_5_4XL : '0') +
+                  parseInt(data.all ? data.all.nomal_5_4XL : '0') +
+                  parseInt(data.all ? data.all.nomal_10_4XL : '0') +
+                  parseInt(data.all ? data.all.nomal_2_5_4XL_employee : '0') +
+                  parseInt(data.all ? data.all.nomal_5_4XL_employee : '0') +
+                  parseInt(data.all ? data.all.nomal_10_4XL_employee : '0')}
+
+                </th>
+                <th scope="col">{
+
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_4XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_4XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_4XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_4XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_4XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_4XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_4XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_4XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_4XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_4XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_4XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_4XL_employee : '0')}
+
+                </th>
+                <th scope="col">
+                  {
+
+                    (parseInt(data.all ? data.all.vip_2_5_4XL : '0') +
+                      parseInt(data.all ? data.all.vip_5_4XL : '0') +
+                      parseInt(data.all ? data.all.vip_10_4XL : '0') +
+                      parseInt(data.all ? data.all.vip_2_5_4XL_employee : '0') +
+                      parseInt(data.all ? data.all.vip_5_4XL_employee : '0') +
+                      parseInt(data.all ? data.all.vip_10_4XL_employee : '0') +
+                      parseInt(data.all ? data.all.nomal_2_5_4XL : '0') +
+                      parseInt(data.all ? data.all.nomal_5_4XL : '0') +
+                      parseInt(data.all ? data.all.nomal_10_4XL : '0') +
+                      parseInt(data.all ? data.all.nomal_2_5_4XL_employee : '0') +
+                      parseInt(data.all ? data.all.nomal_5_4XL_employee : '0') +
+                      parseInt(data.all ? data.all.nomal_10_4XL_employee : '0')) -
+                    (parseInt(data.shirt_received ? data.shirt_received.vip_2_5_4XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_4XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_4XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_2_5_4XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_4XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_4XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_4XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_4XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_4XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_4XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_4XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_4XL_employee : '0'))
+                  }
+                </th>
+                <th scope="col">{
+                  parseInt(data.all ? data.all.vip_2_5_6XL : '0') +
+                  parseInt(data.all ? data.all.vip_5_6XL : '0') +
+                  parseInt(data.all ? data.all.vip_10_6XL : '0') +
+                  parseInt(data.all ? data.all.vip_2_5_6XL_employee : '0') +
+                  parseInt(data.all ? data.all.vip_5_6XL_employee : '0') +
+                  parseInt(data.all ? data.all.vip_10_6XL_employee : '0') +
+                  parseInt(data.all ? data.all.nomal_2_5_6XL : '0') +
+                  parseInt(data.all ? data.all.nomal_5_6XL : '0') +
+                  parseInt(data.all ? data.all.nomal_10_6XL : '0') +
+                  parseInt(data.all ? data.all.nomal_2_5_6XL_employee : '0') +
+                  parseInt(data.all ? data.all.nomal_5_6XL_employee : '0') +
+                  parseInt(data.all ? data.all.nomal_10_6XL_employee : '0')}
+
+                </th>
+                <th scope="col">{
+
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_6XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_6XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_6XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_6XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_6XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_6XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_6XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_6XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_6XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_6XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_6XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_6XL_employee : '0')}
+
+                </th>
+                <th scope="col">
+                  {
+
+                    (parseInt(data.all ? data.all.vip_2_5_6XL : '0') +
+                      parseInt(data.all ? data.all.vip_5_6XL : '0') +
+                      parseInt(data.all ? data.all.vip_10_6XL : '0') +
+                      parseInt(data.all ? data.all.vip_2_5_6XL_employee : '0') +
+                      parseInt(data.all ? data.all.vip_5_6XL_employee : '0') +
+                      parseInt(data.all ? data.all.vip_10_6XL_employee : '0') +
+                      parseInt(data.all ? data.all.nomal_2_5_6XL : '0') +
+                      parseInt(data.all ? data.all.nomal_5_6XL : '0') +
+                      parseInt(data.all ? data.all.nomal_10_6XL : '0') +
+                      parseInt(data.all ? data.all.nomal_2_5_6XL_employee : '0') +
+                      parseInt(data.all ? data.all.nomal_5_6XL_employee : '0') +
+                      parseInt(data.all ? data.all.nomal_10_6XL_employee : '0')) -
+                    (parseInt(data.shirt_received ? data.shirt_received.vip_2_5_6XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_6XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_6XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_2_5_6XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_6XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_6XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_6XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_6XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_6XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_6XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_6XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_6XL_employee : '0'))
+                  }
+                </th>
+                <th scope="col">{
+                  parseInt(data.all ? data.all.sum_vip_2_5 : '0') +
+                  parseInt(data.all ? data.all.sum_vip_5 : '0') +
+                  parseInt(data.all ? data.all.sum_vip_10 : '0') +
+                  parseInt(data.all ? data.all.sum_vip_2_5_employee : '0') +
+                  parseInt(data.all ? data.all.sum_vip_5_employee : '0') +
+                  parseInt(data.all ? data.all.sum_vip_10_employee : '0') +
+                  parseInt(data.all ? data.all.sum_nomal_2_5 : '0') +
+                  parseInt(data.all ? data.all.sum_nomal_5 : '0') +
+                  parseInt(data.all ? data.all.sum_nomal_10 : '0') +
+                  parseInt(data.all ? data.all.sum_nomal_2_5_employee : '0') +
+                  parseInt(data.all ? data.all.sum_nomal_5_employee : '0') +
+                  parseInt(data.all ? data.all.sum_nomal_10_employee : '0')}
+                </th>
+                <th scope="col">{
+                  parseInt(data.shirt_received ? data.shirt_received.sum_vip_2_5 : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.sum_vip_5 : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.sum_vip_10 : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.sum_vip_2_5_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.sum_vip_5_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.sum_vip_10_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.sum_nomal_2_5 : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.sum_nomal_5 : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.sum_nomal_10 : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.sum_nomal_2_5_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.sum_nomal_5_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.sum_nomal_10_employee : '0')}
+
+                </th>
+                <th scope="col">
+                  {
+
+                    (parseInt(data.all ? data.all.sum_vip_2_5 : '0') +
+                      parseInt(data.all ? data.all.sum_vip_5 : '0') +
+                      parseInt(data.all ? data.all.sum_vip_10 : '0') +
+                      parseInt(data.all ? data.all.sum_vip_2_5_employee : '0') +
+                      parseInt(data.all ? data.all.sum_vip_5_employee : '0') +
+                      parseInt(data.all ? data.all.sum_vip_10_employee : '0') +
+                      parseInt(data.all ? data.all.sum_nomal_2_5 : '0') +
+                      parseInt(data.all ? data.all.sum_nomal_5 : '0') +
+                      parseInt(data.all ? data.all.sum_nomal_10 : '0') +
+                      parseInt(data.all ? data.all.sum_nomal_2_5_employee : '0') +
+                      parseInt(data.all ? data.all.sum_nomal_5_employee : '0') +
+                      parseInt(data.all ? data.all.sum_nomal_10_employee : '0')) -
+                    (parseInt(data.shirt_received ? data.shirt_received.sum_vip_2_5 : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.sum_vip_5 : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.sum_vip_10 : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.sum_vip_2_5_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.sum_vip_5_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.sum_vip_10_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.sum_nomal_2_5 : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.sum_nomal_5 : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.sum_nomal_10 : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.sum_nomal_2_5_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.sum_nomal_5_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.sum_nomal_10_employee : '0'))
+                  }
+                </th>
+
+              </tr>
             </tbody>
           </Table>
 
@@ -554,6 +1127,10 @@ const DashboardTable = () => {
                 <th scope="col" width="3%">6XL <br />ลงทะเบียนรับเสื้อ</th>
                 <th scope="col" width="3%">6XL <br />รับเหรียญแล้ว</th>
                 <th scope="col" width="3%">Diff</th>
+                <th scope="col" width="3%">Total <br />ลงทะเบียนรับเสื้อ</th>
+                <th scope="col" width="3%">Total <br />รับเหรียญแล้ว</th>
+                <th scope="col" width="3%">Total Diff</th>
+
               </tr>
             </thead>
             <tbody
@@ -565,7 +1142,7 @@ const DashboardTable = () => {
               <tr style={{
                 textAlign: "left",
               }}>
-                <th scope="row" colspan="25">พนักงาน</th>
+                <th scope="row" colspan="28">พนักงาน</th>
               </tr>
               <tr>
                 <th scope="row">10 KM</th>
@@ -593,6 +1170,12 @@ const DashboardTable = () => {
                 <th scope="col">{data.shirt_received ? data.shirt_received.nomal_10_6XL_employee : '0'}</th>
                 <th scope="col">{data.finisher_award ? data.finisher_award.nomal_10_6XL_employee : '0'}</th>
                 <th scope="col">{parseInt(data.shirt_received ? data.shirt_received.nomal_10_6XL_employee : '0') - parseInt(data.finisher_award ? data.finisher_award.nomal_10_6XL_employee : '0')}</th>
+                <th scope="col">{data.shirt_received ? data.shirt_received.sum_nomal_10_employee : '0'}</th>
+                <th scope="col">{data.finisher_award ? data.finisher_award.sum_nomal_10_employee : '0'}</th>
+                <th scope="col">{
+                  parseInt(data.shirt_received ? data.shirt_received.sum_nomal_10_employee : '0') -
+                  parseInt(data.finisher_award ? data.finisher_award.sum_nomal_10_employee : '0')
+                }</th>
               </tr>
               <tr>
                 <th scope="row">5 KM</th>
@@ -620,7 +1203,13 @@ const DashboardTable = () => {
                 <th scope="col">{data.shirt_received ? data.shirt_received.nomal_5_6XL_employee : '0'}</th>
                 <th scope="col">{data.finisher_award ? data.finisher_award.nomal_5_6XL_employee : '0'}</th>
                 <th scope="col">{parseInt(data.shirt_received ? data.shirt_received.nomal_5_6XL_employee : '0') - parseInt(data.finisher_award ? data.finisher_award.nomal_5_6XL_employee : '0')}</th>
-              </tr>
+                <th scope="col">{data.shirt_received ? data.shirt_received.sum_nomal_5_employee : '0'}</th>
+                <th scope="col">{data.finisher_award ? data.finisher_award.sum_nomal_5_employee : '0'}</th>
+                <th scope="col">{
+                  parseInt(data.shirt_received ? data.shirt_received.sum_nomal_5_employee : '0') -
+                  parseInt(data.finisher_award ? data.finisher_award.sum_nomal_5_employee : '0')
+                }
+                </th> </tr>
               <tr>
                 <th scope="row">2.5 KM</th>
                 <th scope="col">{data.shirt_received ? data.shirt_received.nomal_2_5_S_employee : '0'}</th>
@@ -647,11 +1236,17 @@ const DashboardTable = () => {
                 <th scope="col">{data.shirt_received ? data.shirt_received.nomal_2_5_6XL_employee : '0'}</th>
                 <th scope="col">{data.finisher_award ? data.finisher_award.nomal_2_5_6XL_employee : '0'}</th>
                 <th scope="col">{parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_6XL_employee : '0') - parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_6XL_employee : '0')}</th>
+                <th scope="col">{data.shirt_received ? data.shirt_received.sum_nomal_2_5_employee : '0'}</th>
+                <th scope="col">{data.finisher_award ? data.finisher_award.sum_nomal_2_5_employee : '0'}</th>
+                <th scope="col">{
+                  parseInt(data.shirt_received ? data.shirt_received.sum_nomal_2_5_employee : '0') -
+                  parseInt(data.finisher_award ? data.finisher_award.sum_nomal_2_5_employee : '0')
+                }</th>
               </tr>
               <tr style={{
                 textAlign: "left",
               }}>
-                <th scope="row" colspan="25">พนักงาน VIP</th>
+                <th scope="row" colspan="28">พนักงาน VIP</th>
               </tr>
               <tr>
                 <th scope="row">10 KM</th>
@@ -679,6 +1274,12 @@ const DashboardTable = () => {
                 <th scope="col">{data.shirt_received ? data.shirt_received.vip_10_6XL_employee : '0'}</th>
                 <th scope="col">{data.finisher_award ? data.finisher_award.vip_10_6XL_employee : '0'}</th>
                 <th scope="col">{parseInt(data.shirt_received ? data.shirt_received.vip_10_6XL_employee : '0') - parseInt(data.finisher_award ? data.finisher_award.vip_10_6XL_employee : '0')}</th>
+                <th scope="col">{data.shirt_received ? data.shirt_received.sum_vip_10_employee : '0'}</th>
+                <th scope="col">{data.finisher_award ? data.finisher_award.sum_vip_10_employee : '0'}</th>
+                <th scope="col">{
+                  parseInt(data.shirt_received ? data.shirt_received.sum_vip_10_employee : '0') -
+                  parseInt(data.finisher_award ? data.finisher_award.sum_vip_10_employee : '0')
+                }</th>
               </tr>
               <tr>
                 <th scope="row">5 KM</th>
@@ -706,6 +1307,12 @@ const DashboardTable = () => {
                 <th scope="col">{data.shirt_received ? data.shirt_received.vip_5_6XL_employee : '0'}</th>
                 <th scope="col">{data.finisher_award ? data.finisher_award.vip_5_6XL_employee : '0'}</th>
                 <th scope="col">{parseInt(data.shirt_received ? data.shirt_received.vip_5_6XL_employee : '0') - parseInt(data.finisher_award ? data.finisher_award.vip_5_6XL_employee : '0')}</th>
+                <th scope="col">{data.shirt_received ? data.shirt_received.sum_vip_5_employee : '0'}</th>
+                <th scope="col">{data.finisher_award ? data.finisher_award.sum_vip_5_employee : '0'}</th>
+                <th scope="col">{
+                  parseInt(data.shirt_received ? data.shirt_received.sum_vip_5_employee : '0') -
+                  parseInt(data.finisher_award ? data.finisher_award.sum_vip_5_employee : '0')
+                }</th>
               </tr>
               <tr>
                 <th scope="row">2.5 KM</th>
@@ -733,11 +1340,18 @@ const DashboardTable = () => {
                 <th scope="col">{data.shirt_received ? data.shirt_received.vip_2_5_6XL_employee : '0'}</th>
                 <th scope="col">{data.finisher_award ? data.finisher_award.vip_2_5_6XL_employee : '0'}</th>
                 <th scope="col">{parseInt(data.shirt_received ? data.shirt_received.vip_2_5_6XL_employee : '0') - parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_6XL_employee : '0')}</th>
+                <th scope="col">{data.shirt_received ? data.shirt_received.sum_vip_2_5_employee : '0'}</th>
+                <th scope="col">{data.finisher_award ? data.finisher_award.sum_vip_2_5_employee : '0'}</th>
+                <th scope="col">{
+                  parseInt(data.shirt_received ? data.shirt_received.sum_vip_2_5_employee : '0') -
+                  parseInt(data.finisher_award ? data.finisher_award.sum_vip_2_5_employee : '0')
+                }</th>
+
               </tr>
               <tr style={{
                 textAlign: "left",
               }}>
-                <th scope="row" colspan="25">ลูกค้าทั่วไป</th>
+                <th scope="row" colspan="28">ลูกค้าทั่วไป</th>
               </tr>
               <tr>
                 <th scope="row">10 KM</th>
@@ -765,6 +1379,14 @@ const DashboardTable = () => {
                 <th scope="col">{data.shirt_received ? data.shirt_received.nomal_10_6XL : '0'}</th>
                 <th scope="col">{data.finisher_award ? data.finisher_award.nomal_10_6XL : '0'}</th>
                 <th scope="col">{parseInt(data.shirt_received ? data.shirt_received.nomal_10_6XL : '0') - parseInt(data.finisher_award ? data.finisher_award.nomal_10_6XL : '0')}</th>
+                <th scope="col">{data.shirt_received ? data.shirt_received.sum_nomal_10 : '0'}</th>
+                <th scope="col">{data.finisher_award ? data.finisher_award.sum_nomal_10 : '0'}</th>
+                <th scope="col">{
+                  parseInt(data.shirt_received ? data.shirt_received.sum_nomal_10 : '0') -
+                  parseInt(data.finisher_award ? data.finisher_award.sum_nomal_10 : '0')
+                }
+                </th>
+
               </tr>
               <tr>
                 <th scope="row">5 KM</th>
@@ -792,6 +1414,13 @@ const DashboardTable = () => {
                 <th scope="col">{data.shirt_received ? data.shirt_received.nomal_5_6XL : '0'}</th>
                 <th scope="col">{data.finisher_award ? data.finisher_award.nomal_5_6XL : '0'}</th>
                 <th scope="col">{parseInt(data.shirt_received ? data.shirt_received.nomal_5_6XL : '0') - parseInt(data.finisher_award ? data.finisher_award.nomal_5_6XL : '0')}</th>
+                <th scope="col">{data.shirt_received ? data.shirt_received.sum_nomal_5 : '0'}</th>
+                <th scope="col">{data.finisher_award ? data.finisher_award.sum_nomal_5 : '0'}</th>
+                <th scope="col">{
+                  parseInt(data.shirt_received ? data.shirt_received.sum_nomal_5 : '0') -
+                  parseInt(data.finisher_award ? data.finisher_award.sum_nomal_5 : '0')
+                }
+                </th>
               </tr>
               <tr>
                 <th scope="row">2.5 KM</th>
@@ -819,11 +1448,17 @@ const DashboardTable = () => {
                 <th scope="col">{data.shirt_received ? data.shirt_received.nomal_2_5_6XL : '0'}</th>
                 <th scope="col">{data.finisher_award ? data.finisher_award.nomal_2_5_6XL : '0'}</th>
                 <th scope="col">{parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_6XL : '0') - parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_6XL : '0')}</th>
+                <th scope="col">{data.shirt_received ? data.shirt_received.sum_nomal_2_5 : '0'}</th>
+                <th scope="col">{data.finisher_award ? data.finisher_award.sum_nomal_2_5 : '0'}</th>
+                <th scope="col">{
+                  parseInt(data.shirt_received ? data.shirt_received.sum_nomal_2_5 : '0') -
+                  parseInt(data.finisher_award ? data.finisher_award.sum_nomal_2_5 : '0')
+                }</th>
               </tr>
               <tr style={{
                 textAlign: "left",
               }}>
-                <th scope="row" colspan="25">ลูกค้าทั่วไป VIP</th>
+                <th scope="row" colspan="28">ลูกค้าทั่วไป VIP</th>
               </tr>
               <tr>
                 <th scope="row">10 KM</th>
@@ -851,6 +1486,13 @@ const DashboardTable = () => {
                 <th scope="col">{data.shirt_received ? data.shirt_received.vip_10_6XL : '0'}</th>
                 <th scope="col">{data.finisher_award ? data.finisher_award.vip_10_6XL : '0'}</th>
                 <th scope="col">{parseInt(data.shirt_received ? data.shirt_received.vip_10_6XL : '0') - parseInt(data.finisher_award ? data.finisher_award.vip_10_6XL : '0')}</th>
+                <th scope="col">{data.shirt_received ? data.shirt_received.sum_vip_10 : '0'}</th>
+                <th scope="col">{data.finisher_award ? data.finisher_award.sum_vip_10 : '0'}</th>
+                <th scope="col">{
+                  parseInt(data.shirt_received ? data.shirt_received.sum_vip_10 : '0') -
+                  parseInt(data.finisher_award ? data.finisher_award.sum_vip_10 : '0')
+                }
+                </th>
               </tr>
               <tr>
                 <th scope="row">5 KM</th>
@@ -878,6 +1520,12 @@ const DashboardTable = () => {
                 <th scope="col">{data.shirt_received ? data.shirt_received.vip_5_6XL : '0'}</th>
                 <th scope="col">{data.finisher_award ? data.finisher_award.vip_5_6XL : '0'}</th>
                 <th scope="col">{parseInt(data.shirt_received ? data.shirt_received.vip_5_6XL : '0') - parseInt(data.finisher_award ? data.finisher_award.vip_5_6XL : '0')}</th>
+                <th scope="col">{data.shirt_received ? data.shirt_received.sum_vip_5 : '0'}</th>
+                <th scope="col">{data.finisher_award ? data.finisher_award.sum_vip_5 : '0'}</th>
+                <th scope="col">{
+                  parseInt(data.shirt_received ? data.shirt_received.sum_vip_5 : '0') -
+                  parseInt(data.finisher_award ? data.finisher_award.sum_vip_5 : '0')
+                }</th>
               </tr>
               <tr>
                 <th scope="row">2.5 KM</th>
@@ -905,8 +1553,561 @@ const DashboardTable = () => {
                 <th scope="col">{data.shirt_received ? data.shirt_received.vip_2_5_6XL : '0'}</th>
                 <th scope="col">{data.finisher_award ? data.finisher_award.vip_2_5_6XL : '0'}</th>
                 <th scope="col">{parseInt(data.shirt_received ? data.shirt_received.vip_2_5_6XL : '0') - parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_6XL : '0')}</th>
+                <th scope="col">{data.shirt_received ? data.shirt_received.sum_vip_2_5 : '0'}</th>
+                <th scope="col">{data.finisher_award ? data.finisher_award.sum_vip_2_5 : '0'}</th>
+                <th scope="col">{
+                  parseInt(data.shirt_received ? data.shirt_received.sum_vip_2_5 : '0') -
+                  parseInt(data.finisher_award ? data.finisher_award.sum_vip_2_5 : '0')
+                } </th>
+
               </tr>
 
+              <tr>
+                <th scope="row" style={{
+                  textAlign: "left",
+                }}>Total</th>
+                <th scope="col">{
+
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_S : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_S : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_S : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_S_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_S_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_S_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_S : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_S : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_S : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_S_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_S_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_S_employee : '0')}
+
+                </th>
+                <th scope="col">{
+
+                  parseInt(data.finisher_award ? data.finisher_award.vip_2_5_S : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_5_S : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_10_S : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_2_5_S_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_5_S_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_10_S_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_S : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_5_S : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_10_S : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_S_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_5_S_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_10_S_employee : '0')}
+
+                </th>
+                <th scope="col">
+                  {
+
+                    (parseInt(data.shirt_received ? data.shirt_received.vip_2_5_S : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_S : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_S : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_2_5_S_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_S_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_S_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_S : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_S : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_S : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_S_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_S_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_S_employee : '0')) -
+                    (parseInt(data.finisher_award ? data.finisher_award.vip_2_5_S : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_5_S : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_10_S : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_2_5_S_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_5_S_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_10_S_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_S : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_5_S : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_10_S : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_S_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_5_S_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_10_S_employee : '0'))
+                  }
+                </th>
+
+                <th scope="col">{
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_M : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_M : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_M : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_M_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_M_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_M_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_M : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_M : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_M : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_M_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_M_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_M_employee : '0')}
+
+                </th>
+                <th scope="col">{
+
+                  parseInt(data.finisher_award ? data.finisher_award.vip_2_5_M : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_5_M : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_10_M : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_2_5_M_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_5_M_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_10_M_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_M : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_5_M : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_10_M : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_M_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_5_M_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_10_M_employee : '0')}
+
+                </th>
+                <th scope="col">
+                  {
+
+                    (parseInt(data.shirt_received ? data.shirt_received.vip_2_5_M : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_M : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_M : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_2_5_M_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_M_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_M_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_M : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_M : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_M : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_M_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_M_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_M_employee : '0')) -
+                    (parseInt(data.finisher_award ? data.finisher_award.vip_2_5_M : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_5_M : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_10_M : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_2_5_M_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_5_M_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_10_M_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_M : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_5_M : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_10_M : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_M_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_5_M_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_10_M_employee : '0'))
+                  }
+                </th>
+                <th scope="col">{
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_L : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_L : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_L : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_L_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_L_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_L_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_L : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_L : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_L : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_L_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_L_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_L_employee : '0')}
+
+                </th>
+                <th scope="col">{
+
+                  parseInt(data.finisher_award ? data.finisher_award.vip_2_5_L : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_5_L : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_10_L : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_2_5_L_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_5_L_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_10_L_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_L : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_5_L : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_10_L : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_L_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_5_L_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_10_L_employee : '0')}
+
+                </th>
+                <th scope="col">
+                  {
+
+                    (parseInt(data.shirt_received ? data.shirt_received.vip_2_5_L : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_L : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_L : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_2_5_L_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_L_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_L_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_L : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_L : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_L : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_L_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_L_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_L_employee : '0')) -
+                    (parseInt(data.finisher_award ? data.finisher_award.vip_2_5_L : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_5_L : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_10_L : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_2_5_L_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_5_L_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_10_L_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_L : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_5_L : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_10_L : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_L_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_5_L_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_10_L_employee : '0'))
+                  }
+                </th>
+                <th scope="col">{
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_XL_employee : '0')}
+
+                </th>
+                <th scope="col">{
+
+                  parseInt(data.finisher_award ? data.finisher_award.vip_2_5_XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_5_XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_10_XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_2_5_XL_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_5_XL_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_10_XL_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_5_XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_10_XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_XL_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_5_XL_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_10_XL_employee : '0')}
+
+                </th>
+                <th scope="col">
+                  {
+
+                    (parseInt(data.shirt_received ? data.shirt_received.vip_2_5_XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_2_5_XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_XL_employee : '0')) -
+                    (parseInt(data.finisher_award ? data.finisher_award.vip_2_5_XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_5_XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_10_XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_2_5_XL_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_5_XL_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_10_XL_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_5_XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_10_XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_XL_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_5_XL_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_10_XL_employee : '0'))
+                  }
+                </th>
+                <th scope="col">{
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_2XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_2XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_2XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_2XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_2XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_2XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_2XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_2XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_2XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_2XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_2XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_2XL_employee : '0')}
+
+                </th>
+                <th scope="col">{
+
+                  parseInt(data.finisher_award ? data.finisher_award.vip_2_5_2XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_5_2XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_10_2XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_2_5_2XL_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_5_2XL_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_10_2XL_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_2XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_5_2XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_10_2XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_2XL_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_5_2XL_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_10_2XL_employee : '0')}
+
+                </th>
+                <th scope="col">
+                  {
+
+                    (parseInt(data.shirt_received ? data.shirt_received.vip_2_5_2XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_2XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_2XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_2_5_2XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_2XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_2XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_2XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_2XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_2XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_2XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_2XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_2XL_employee : '0')) -
+                    (parseInt(data.finisher_award ? data.finisher_award.vip_2_5_2XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_5_2XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_10_2XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_2_5_2XL_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_5_2XL_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_10_2XL_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_2XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_5_2XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_10_2XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_2XL_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_5_2XL_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_10_2XL_employee : '0'))
+                  }
+                </th>
+                <th scope="col">{
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_3XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_3XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_3XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_3XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_3XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_3XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_3XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_3XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_3XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_3XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_3XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_3XL_employee : '0')}
+
+                </th>
+                <th scope="col">{
+
+                  parseInt(data.finisher_award ? data.finisher_award.vip_2_5_3XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_5_3XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_10_3XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_2_5_3XL_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_5_3XL_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_10_3XL_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_3XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_5_3XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_10_3XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_3XL_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_5_3XL_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_10_3XL_employee : '0')}
+
+                </th>
+                <th scope="col">
+                  {
+
+                    (parseInt(data.shirt_received ? data.shirt_received.vip_2_5_3XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_3XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_3XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_2_5_3XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_3XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_3XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_3XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_3XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_3XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_3XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_3XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_3XL_employee : '0')) -
+                    (parseInt(data.finisher_award ? data.finisher_award.vip_2_5_3XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_5_3XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_10_3XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_2_5_3XL_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_5_3XL_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_10_3XL_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_3XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_5_3XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_10_3XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_3XL_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_5_3XL_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_10_3XL_employee : '0'))
+                  }
+                </th>
+                <th scope="col">{
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_4XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_4XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_4XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_4XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_4XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_4XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_4XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_4XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_4XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_4XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_4XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_4XL_employee : '0')}
+
+                </th>
+                <th scope="col">{
+
+                  parseInt(data.finisher_award ? data.finisher_award.vip_2_5_4XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_5_4XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_10_4XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_2_5_4XL_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_5_4XL_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_10_4XL_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_4XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_5_4XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_10_4XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_4XL_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_5_4XL_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_10_4XL_employee : '0')}
+
+                </th>
+                <th scope="col">
+                  {
+
+                    (parseInt(data.shirt_received ? data.shirt_received.vip_2_5_4XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_4XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_4XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_2_5_4XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_4XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_4XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_4XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_4XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_4XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_4XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_4XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_4XL_employee : '0')) -
+                    (parseInt(data.finisher_award ? data.finisher_award.vip_2_5_4XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_5_4XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_10_4XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_2_5_4XL_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_5_4XL_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_10_4XL_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_4XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_5_4XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_10_4XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_4XL_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_5_4XL_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_10_4XL_employee : '0'))
+                  }
+                </th>
+                <th scope="col">{
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_6XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_6XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_6XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_2_5_6XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_5_6XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.vip_10_6XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_6XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_6XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_6XL : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_6XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_5_6XL_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.nomal_10_6XL_employee : '0')}
+
+                </th>
+                <th scope="col">{
+
+                  parseInt(data.finisher_award ? data.finisher_award.vip_2_5_6XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_5_6XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_10_6XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_2_5_6XL_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_5_6XL_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.vip_10_6XL_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_6XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_5_6XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_10_6XL : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_6XL_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_5_6XL_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.nomal_10_6XL_employee : '0')}
+
+                </th>
+                <th scope="col">
+                  {
+
+                    (parseInt(data.shirt_received ? data.shirt_received.vip_2_5_6XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_6XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_6XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_2_5_6XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_5_6XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.vip_10_6XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_6XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_6XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_6XL : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_2_5_6XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_5_6XL_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.nomal_10_6XL_employee : '0')) -
+                    (parseInt(data.finisher_award ? data.finisher_award.vip_2_5_6XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_5_6XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_10_6XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_2_5_6XL_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_5_6XL_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.vip_10_6XL_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_6XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_5_6XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_10_6XL : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_2_5_6XL_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_5_6XL_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.nomal_10_6XL_employee : '0'))
+                  }
+                </th>
+                <th scope="col">{
+                  parseInt(data.shirt_received ? data.shirt_received.sum_vip_2_5 : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.sum_vip_5 : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.sum_vip_10 : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.sum_vip_2_5_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.sum_vip_5_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.sum_vip_10_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.sum_nomal_2_5 : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.sum_nomal_5 : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.sum_nomal_10 : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.sum_nomal_2_5_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.sum_nomal_5_employee : '0') +
+                  parseInt(data.shirt_received ? data.shirt_received.sum_nomal_10_employee : '0')}
+                </th>
+                <th scope="col">{
+                  parseInt(data.finisher_award ? data.finisher_award.sum_vip_2_5 : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.sum_vip_5 : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.sum_vip_10 : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.sum_vip_2_5_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.sum_vip_5_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.sum_vip_10_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.sum_nomal_2_5 : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.sum_nomal_5 : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.sum_nomal_10 : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.sum_nomal_2_5_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.sum_nomal_5_employee : '0') +
+                  parseInt(data.finisher_award ? data.finisher_award.sum_nomal_10_employee : '0')}
+
+                </th>
+                <th scope="col">
+                  {
+
+                    (parseInt(data.shirt_received ? data.shirt_received.sum_vip_2_5 : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.sum_vip_5 : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.sum_vip_10 : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.sum_vip_2_5_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.sum_vip_5_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.sum_vip_10_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.sum_nomal_2_5 : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.sum_nomal_5 : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.sum_nomal_10 : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.sum_nomal_2_5_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.sum_nomal_5_employee : '0') +
+                      parseInt(data.shirt_received ? data.shirt_received.sum_nomal_10_employee : '0')) -
+                    (parseInt(data.finisher_award ? data.finisher_award.sum_vip_2_5 : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.sum_vip_5 : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.sum_vip_10 : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.sum_vip_2_5_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.sum_vip_5_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.sum_vip_10_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.sum_nomal_2_5 : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.sum_nomal_5 : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.sum_nomal_10 : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.sum_nomal_2_5_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.sum_nomal_5_employee : '0') +
+                      parseInt(data.finisher_award ? data.finisher_award.sum_nomal_10_employee : '0'))
+                  }
+                </th>
+
+              </tr>
             </tbody>
           </Table>
         </div>
