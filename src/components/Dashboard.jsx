@@ -108,7 +108,7 @@ const DashboardTable = () => {
   <tbody>
     <tr>
       <th scope="row">พนักงาน</th>
-          </tr>
+          </tr> 
     <tr>
       <th scope="row">10 KM</th>
       <th scope="col">{data.all.nomal_10_S_employee}</th>
