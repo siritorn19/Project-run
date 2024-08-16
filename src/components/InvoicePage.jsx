@@ -111,7 +111,7 @@ function InvoicePage() {
           <div style={{ width: "40%", textAlign: "right" }}>
             <p>
               <strong>เลขที่:</strong>{" "}
-              {invoiceData?.ref_1 || "MC10100124080006"}
+              {invoiceData?.ref_1}
             </p>
             <p>
               <strong>วันที่: </strong>
@@ -146,7 +146,7 @@ function InvoicePage() {
           </p>
           <p>
             <strong>เลขประจำตัวผู้เสียภาษี:</strong>{" "}
-            {invoiceData?.tax_id || "0105562175419"}
+            {invoiceData?.card_id}
           </p>
         </div>
 
@@ -225,7 +225,7 @@ function InvoicePage() {
                   textAlign: "left",
                 }}
               >
-                {"บัตรเดิน-วิ่ง วันที่ 17 ส.ค. 2567"}
+                {"บัตรวิ่งวันที่ 17 ส.ค. 2567"}
               </td>
               <td
                 style={{
