@@ -118,7 +118,7 @@ function EditModal({ show, onClose, id }) {
               </Form.Label>
               <Form.Control
                 type="text"
-                name="cardId"
+                name="card_id"
                 value={data.card_id || ""}
                 onChange={handleInputChange}
                 readOnly={!isEditing}

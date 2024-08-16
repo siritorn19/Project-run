@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import Home from "./components/Home";
 import Login from "./components/Login";
+import MedalsPage from "./components/MedalsPage";
 import Navbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
 import Invoice from "./components/InvoicePage";
@@ -25,7 +26,7 @@ function App() {
             </PrivateRoute>
           }
         />
-          <Route
+        <Route
           path="/invoice"
           element={
             <PrivateRoute>
@@ -33,7 +34,14 @@ function App() {
             </PrivateRoute>
           }
         />
-        {/* เส้นทางสำรองสำหรับทุก URL ที่ไม่ตรงกับเส้นทางอื่นๆ */}
+        <Route
+          path="/medalpage"
+          element={
+            <PrivateRoute>
+              <MedalsPage />
+            </PrivateRoute>
+          }
+        />
         <Route path="*" element={<Navigate to="/home" replace />} />
       </Routes>
     </Router>

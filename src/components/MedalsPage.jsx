@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { FaSearch, FaPhoneAlt } from "react-icons/fa";
-import { IoMdContact } from "react-icons/io";
+import { FaSearch, FaTshirt } from "react-icons/fa";
+// import { IoMdContact } from "react-icons/io";
+import { FaMedal } from "react-icons/fa6";
+
 import {
   Container,
   Table,
@@ -36,6 +38,7 @@ function Home() {
     address: "",
     tel: "",
     shirtSize: "",
+    finisher_award: "",
   });
   const [selectedIds, setSelectedIds] = useState([]);
   const [contactNameData, setContactNameData] = useState([]);
@@ -80,8 +83,12 @@ function Home() {
   }, []);
 
   const filteredData = data.filter((val) =>
-    Object.values(val).join(" ").toLowerCase().includes(search.toLowerCase())
+    val.bib_id.toLowerCase().includes(search.toLowerCase())
   );
+
+  // const filteredData = data.filter((val) =>
+  //   Object.values(val).join(" ").toLowerCase().includes(search.toLowerCase())
+  // );
 
   const handleEditClick = (item) => {
     //console.log("ตรวจสอบข้อมูล ID:", item.id);
@@ -97,6 +104,7 @@ function Home() {
       address: item.address || "",
       tel: item.tel || "",
       shirtSize: item.shirt_size || "",
+      finisher_award: item.finisher_award || "",
     });
     setShowEditModal(true);
   };
@@ -129,22 +137,10 @@ function Home() {
       return newSelectedIds;
     });
   };
+  
 
-  const handleInputContactName = async (id, currentData) => {
-    setContactNameData((prev) => ({
-      ...prev,
-      [id]: currentData,
-    }));
-  };
-
-  const handleInputContactTel = async (id, currentData) => {
-    setContactTelData((prev) => ({
-      ...prev,
-      [id]: currentData,
-    }));
-  };
-
-  const handleUpdateClick = async () => {
+  {
+    /*const handleUpdateClick = async () => {
     try {
       selectedIds.forEach(async (ids) => {
         try {
@@ -186,82 +182,47 @@ function Home() {
       setAlertTitle("Error");
       setAlertMessage("Error updating shirt status");
     }
-  };
+  }; */
+  }
 
-  const handleUpdateClick2 = async () => {
-    if (selectedIds.length === 1) {
-      // Update shirtStatus for a single checkbox
-      try {
-        const url = `${process.env.REACT_APP_BACKEND_DOMAIN_API}/running72/account/update/`;
-        const payload = {
-          shirt_status: "Received",
-          id: selectedIds[0],
-        };
-        const response = await axios.post(url, payload, {
-          headers: {
-            "x-api-key": process.env.REACT_APP_X_API_KEY,
-          },
-        });
-        if (response.status === 200) {
-          setData((prevData) =>
-            prevData.map((item) =>
-              item.id === selectedIds[0]
-                ? { ...item, shirt_status: "Received" }
-                : item
-            )
-          );
-          setAlertTitle("Success");
-          setAlertMessage("Shirt status updated successfully");
-        } else {
-          setAlertTitle("Error");
-          setAlertMessage("Error updating shirt status");
-        }
-      } catch (error) {
-        console.error("Error updating shirt status:", error);
+
+  //Update รับเหรียญ
+  const handleUpdateClick = async () => {
+    try {
+      const url = `${process.env.REACT_APP_BACKEND_DOMAIN_API}/running72/account/group-finisher`;
+      const payload = {
+        id: selectedIds,
+        finisher_award: "Received",
+      };
+      console.log("API URL รับเหรียญ:", url);
+      console.log("Payload:", payload);
+
+      const response = await axios.post(url, payload, {
+        headers: {
+          "x-api-key": process.env.REACT_APP_X_API_KEY,
+        },
+      });
+
+      if (response.status === 200) {
+        setData((prevData) =>
+          prevData.map((item) =>
+            selectedIds.includes(item.id)
+              ? { ...item, finisher_award: "Received" }
+              : item
+          )
+        );
+        setAlertTitle("Success");
+        setAlertMessage("Medals status updated successfully.");
+      } else {
         setAlertTitle("Error");
-        setAlertMessage("Error updating shirt status");
-      } finally {
-        setShowAlertModal(true);
+        setAlertMessage("Error updating Medals status.");
       }
-    } else if (selectedIds.length > 1) {
-      // Update group status for multiple checkboxes
-      try {
-        const url = `${process.env.REACT_APP_BACKEND_DOMAIN_API}/running72/account/group-received`;
-        const payload = {
-          id: selectedIds, // Send the selected IDs as an array
-          shirt_status: "Received",
-        };
-        //console.log("API URL:", url);
-        //console.log("Payload:", payload);
-
-        const response = await axios.post(url, payload, {
-          headers: {
-            "x-api-key": process.env.REACT_APP_X_API_KEY,
-          },
-        });
-
-        if (response.status === 200) {
-          // Update state with new status
-          setData((prevData) =>
-            prevData.map((item) =>
-              selectedIds.includes(item.id)
-                ? { ...item, shirt_status: "Received" }
-                : item
-            )
-          );
-          setAlertTitle("Success");
-          setAlertMessage("Shirt statuses updated successfully.");
-        } else {
-          setAlertTitle("Error");
-          setAlertMessage("Error updating shirt statuses");
-        }
-      } catch (error) {
-        console.error("Error updating shirt statuses:", error);
-        setAlertTitle("Error");
-        setAlertMessage("Error updating shirt statuses");
-      } finally {
-        setShowAlertModal(true);
-      }
+    } catch (error) {
+      setAlertTitle("Error");
+      setAlertMessage("An error occurred while updating Medals status.");
+      console.error("Error:", error);
+    } finally {
+      setShowAlertModal(true);
     }
   };
 
@@ -280,14 +241,14 @@ function Home() {
 
   return (
     <Container style={{ maxWidth: "1500px", margin: "auto", padding: "10px" }}>
-      <h2 className="mb-3 d-flex justify-content-center"> ข้อมูลผู้สมัคร</h2>
+      <h2 className="mb-3 d-flex justify-content-center"> รับเหรียญ​รางวัล</h2>
       <br />
       <InputGroup
         className="mb-3 d-flex justify-content-center"
         style={{ maxWidth: "600px", width: "100%", float: "right" }}
       >
         <FormControl
-          placeholder="Search..."
+          placeholder="Search BIB No."
           aria-label="Search"
           aria-describedby="basic-addon2"
           value={search}
@@ -302,21 +263,21 @@ function Home() {
           <FaSearch />
         </Button>
       </InputGroup>
-
+ 
       {currentItems.length > 0 ? (
         <>
           <Table
-            className="table table-striped table-hover"
+            className="table table-striped table-hover table table-bordered"
             style={{ marginTop: "20px" }}
           >
-            <thead style={{ fontSize: "18px" }}>
+            <thead style={{ fontSize: "18px", textAlign: "center" }}>
               <tr>
                 <th width="10%">หมายเลขบัตรประชาชน</th>
                 <th width="10%">ชื่อ-สกุล</th>
                 <th width="10%">เบอร์โทรศัพท์</th>
                 <th width="15%">ระยะวิ่ง</th>
                 <th width="5%">BIB No</th>
-                <th width="10%">ขนาดเสื้อที่ต้องการ</th>
+                <th width="10%">ขนาดเสื้อ</th>
                 <th width="5%">บริษัท/รหัสพนักงาน</th>
                 <th width="10%">remark</th>
                 <th width="10%"></th>
@@ -334,7 +295,6 @@ function Home() {
                     </div>
                   )}
                 </th>
-                <th width="10%"></th>
               </tr>
             </thead>
             <tbody>
@@ -344,7 +304,16 @@ function Home() {
                   <td>{item.name}</td>
                   <td>{item.tel}</td>
                   <td>{item.km}</td>
-                  <td>{item.bib_id}</td>
+                  <td>
+                    <b
+                      style={{
+                        color: "green",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {item.bib_id}
+                    </b>
+                  </td>
                   <td>{item.shirt_size}</td>
                   <td>
                     {item.company ? item.company + "/" : ""}
@@ -364,15 +333,14 @@ function Home() {
                     >
                       ตรวจสอบข้อมูล
                     </Button>
+                    <br />
                     {item.payment_amount ? "มีใบกำกับภาษี" : ""}
-                  </td>
-                  <td>
+                    <br />
                     <div style={{ width: "150px", display: "flex" }}>
                       {item.status_register === "Check" ? (
                         <span
                           style={{
                             backgroundColor: "red",
-                            // color: "green",
                             fontWeight: "bold",
                             display: "block",
                             textAlign: "center",
@@ -380,7 +348,7 @@ function Home() {
                         >
                           สถานะการสมัคร Check
                         </span>
-                      ) : item.shirt_status === "Received" ? (
+                      ) : item.shirtStatus === "Received" ? (
                         <span
                           style={{
                             color: "green",
@@ -389,7 +357,42 @@ function Home() {
                             textAlign: "center",
                           }}
                         >
-                          รับเสื้อแล้ว
+                          <FaTshirt /> รับเสื้อแล้ว
+                        </span>
+                      ) : (
+                        <span
+                          style={{
+                            color: "red",
+                            fontWeight: "bold",
+                            display: "block",
+                            textAlign: "center",
+                          }}
+                        >
+                          ยังไม่ได้รับเสื้อ
+                        </span>
+                      )}
+                    </div>
+                  </td>
+
+                  {/* Checkbox รับเหรียญ */}
+                  <td>
+                    <div
+                      style={{
+                        width: "150px",
+                        display: "flex",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {item.finisher_award === "Received" ? (
+                        <span
+                          style={{
+                            color: "green",
+                            fontWeight: "bold",
+                            display: "block",
+                            textAlign: "center",
+                          }}
+                        >
+                          <FaMedal /> รับเหรียญแล้ว
                         </span>
                       ) : (
                         <Form.Check
@@ -398,20 +401,26 @@ function Home() {
                             <span
                               style={{ color: "red" }}
                               onClick={() =>
-                                handleCheckboxChange(item.id, item.shirt_status)
+                                handleCheckboxChange(
+                                  item.id,
+                                  item.finisher_award
+                                )
                               }
                             >
-                              ยังไม่ได้รับเสื้อ
+                              ยังไม่ได้รับเหรียญ
                             </span>
                           }
                           checked={checkedItems[item.id] || false}
                           onChange={() =>
-                            handleCheckboxChange(item.id, item.shirt_status)
+                            handleCheckboxChange(item.id, item.finisher_award)
                           }
                         />
                       )}
                     </div>
-                    <div style={{ width: "150px" }}>
+                  </td>
+
+                  {/*  <td>
+                   <div style={{ width: "150px" }}>
                       <IoMdContact style={{ width: "30px", float: "left" }} />
                       <Form.Control
                         type="text"
@@ -435,8 +444,8 @@ function Home() {
                               : "#fff",
                         }}
                       />
-                    </div>
-                    <br />
+                    </div> */}
+                  {/* <br />
                     <div style={{ width: "150px" }}>
                       <FaPhoneAlt style={{ width: "30px", float: "left" }} />
 
@@ -461,14 +470,13 @@ function Home() {
                               : "#fff",
                         }}
                       />
-                    </div>
-                  </td>
+                    </div> 
+                  </td>*/}
                 </tr>
               ))}
             </tbody>
           </Table>
 
-          {/* Pagination */}
           {/* Pagination */}
           <div className="d-flex justify-content-center">
             <Pagination>
