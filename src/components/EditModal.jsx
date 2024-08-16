@@ -149,7 +149,7 @@ function EditModal({ show, onClose, id }) {
                 name="address"
                 value={data.address || ""}
                 onChange={handleInputChange}
-                readOnly={true}
+                readOnly={!isEditing}
                 className="form-text"
                 style={{ borderBottom: "1px solid #dee2e6", paddingBottom: "0.5rem", width: "80%", backgroundColor: isEditing ? "#fff" : "#e9ecef" }}
               />

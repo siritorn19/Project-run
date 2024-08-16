@@ -11,10 +11,14 @@ const Navbar = () => {
     navigate("/login"); // เปลี่ยนเส้นทางไปที่หน้าล็อกอิน
   };
 
+  const handleReload = () => {
+    navigate("/"); // เปลี่ยนเส้นทางไปที่หน้าล็อกอิน
+  };
+
   return (
     <nav className="navbar bg-body-tertiary shadow p-3 mb-5 bg-white rounded">
       <Container fluid>
-        <span className="navbar-brand mb-0 h1">BigC running together</span>
+        <span className="navbar-brand mb-0 h1" onClick={handleReload}>BigC running together [{`${process.env.REACT_APP_ENV}`}]</span>
         <Button variant="default" onClick={handleLogout} style={{ marginLeft: "auto" }}>
           <b>Logout</b>
         </Button>

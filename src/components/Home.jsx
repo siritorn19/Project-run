@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaPhoneAlt } from "react-icons/fa";
+import { IoMdContact } from "react-icons/io";
 import {
   Container,
   Table,
@@ -37,6 +38,8 @@ function Home() {
     shirtSize: "",
   });
   const [selectedIds, setSelectedIds] = useState([]);
+  const [contactNameData, setContactNameData] = useState([]);
+  const [contactTelData, setContactTelData] = useState([]);
 
 
 
@@ -51,7 +54,7 @@ function Home() {
         }
       );
       //console.log(result.data.data);
-    
+
       return result.data.data;
     } catch (error) {
       console.error(error);
@@ -62,8 +65,20 @@ function Home() {
   useEffect(() => {
     const fetchData = async () => {
       const respData = await fetchDataApi();
+      respData.forEach(async val => {
+        setContactNameData((prev) => ({
+          ...prev,
+          [val.id]: val.contact_name,
+        }));
+        setContactTelData((prev) => ({
+          ...prev,
+          [val.id]: val.contact_tel,
+        }));
+
+      });
 
       setData(respData);
+
     };
     fetchData();
   }, []);
@@ -90,7 +105,7 @@ function Home() {
     setShowEditModal(true);
   };
 
-  const handleCloseEdit = async() => {
+  const handleCloseEdit = async () => {
     setShowEditModal(false);
     const respData = await fetchDataApi();
     setData(respData);
@@ -119,9 +134,72 @@ function Home() {
     });
   };
 
+  const handleInputContactName = async (id, currentData) => {
+    setContactNameData((prev) => ({
+      ...prev,
+      [id]: currentData,
+    }));
+  };
+
+
+  const handleInputContactTel = async (id, currentData) => {
+    setContactTelData((prev) => ({
+      ...prev,
+      [id]: currentData,
+    }));
+  };
 
 
   const handleUpdateClick = async () => {
+    try {
+      selectedIds.forEach(async ids => {
+        try {
+          const url = `${process.env.REACT_APP_BACKEND_DOMAIN_API}/running72/account/update/`;
+          const payload = {
+            shirt_status: "Received",
+            contact_name: contactNameData[ids],
+            contact_tel: contactTelData[ids],
+            id: ids,
+          };
+          //console.log(payload);
+          const response = await axios.post(url, payload, {
+            headers: {
+              "x-api-key": process.env.REACT_APP_X_API_KEY,
+            },
+          });
+          if (response.status === 200) {
+            setData((prevData) =>
+              prevData.map((item) =>
+                item.id === ids
+                  ? { ...item, shirt_status: "Received" }
+                  : item
+              )
+            );
+            setAlertTitle("Success");
+            setAlertMessage("Shirt status updated successfully");
+          } else {
+            setAlertTitle("Error");
+            setAlertMessage("Error updating shirt status");
+          }
+        } catch (error) {
+          console.error("Error updating shirt status:", error);
+          setAlertTitle("Error");
+          setAlertMessage("Error updating shirt status");
+        } finally {
+          setShowAlertModal(true);
+        }
+
+      });
+    } catch (error) {
+      console.error("Error updating shirt status:", error);
+      setAlertTitle("Error");
+      setAlertMessage("Error updating shirt status");
+    }
+
+  }
+
+
+  const handleUpdateClick2 = async () => {
     if (selectedIds.length === 1) {
       // Update shirtStatus for a single checkbox
       try {
@@ -156,47 +234,47 @@ function Home() {
       } finally {
         setShowAlertModal(true);
       }
-    }else if (selectedIds.length > 1) {
-        // Update group status for multiple checkboxes
-        try {
-          const url = `${process.env.REACT_APP_BACKEND_DOMAIN_API}/running72/account/group-received`;
-          const payload = {
-            id: selectedIds, // Send the selected IDs as an array
-            shirt_status: "Received"
-          };
-          //console.log("API URL:", url);
-          //console.log("Payload:", payload);
-      
-          const response = await axios.post(url, payload, {
-            headers: {
-              "x-api-key": process.env.REACT_APP_X_API_KEY,
-            },
-          });
-      
-          if (response.status === 200) {
-            // Update state with new status
-            setData((prevData) =>
-              prevData.map((item) =>
-                selectedIds.includes(item.id)
-                  ? { ...item, shirt_status: "Received" }
-                  : item
-              )
-            );
-            setAlertTitle("Success");
-            setAlertMessage("Shirt statuses updated successfully.");
-          } else {
-            setAlertTitle("Error");
-            setAlertMessage("Error updating shirt statuses");
-          }
-        } catch (error) {
-          console.error("Error updating shirt statuses:", error);
+    } else if (selectedIds.length > 1) {
+      // Update group status for multiple checkboxes
+      try {
+        const url = `${process.env.REACT_APP_BACKEND_DOMAIN_API}/running72/account/group-received`;
+        const payload = {
+          id: selectedIds, // Send the selected IDs as an array
+          shirt_status: "Received"
+        };
+        //console.log("API URL:", url);
+        //console.log("Payload:", payload);
+
+        const response = await axios.post(url, payload, {
+          headers: {
+            "x-api-key": process.env.REACT_APP_X_API_KEY,
+          },
+        });
+
+        if (response.status === 200) {
+          // Update state with new status
+          setData((prevData) =>
+            prevData.map((item) =>
+              selectedIds.includes(item.id)
+                ? { ...item, shirt_status: "Received" }
+                : item
+            )
+          );
+          setAlertTitle("Success");
+          setAlertMessage("Shirt statuses updated successfully.");
+        } else {
           setAlertTitle("Error");
           setAlertMessage("Error updating shirt statuses");
-        } finally {
-          setShowAlertModal(true);
         }
+      } catch (error) {
+        console.error("Error updating shirt statuses:", error);
+        setAlertTitle("Error");
+        setAlertMessage("Error updating shirt statuses");
+      } finally {
+        setShowAlertModal(true);
       }
-      
+    }
+
   };
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -213,14 +291,13 @@ function Home() {
   }
 
 
-
   return (
     <Container
       style={{ maxWidth: "1500px", margin: "auto", padding: "10px" }}
     >
       <InputGroup
         className="mb-3 d-flex justify-content-center"
-        style={{ maxWidth: "600px", width: "100%", float: "right"  }}
+        style={{ maxWidth: "600px", width: "100%", float: "right" }}
       >
         <FormControl
           placeholder="Search..."
@@ -253,7 +330,7 @@ function Home() {
                 <th width="15%">ระยะวิ่ง</th>
                 <th width="5%">BIB No</th>
                 <th width="10%">ขนาดเสื้อที่ต้องการ</th>
-                <th width="10%">บริษัท/รหัสพนักงาน</th>
+                <th width="5%">บริษัท/รหัสพนักงาน</th>
                 <th width="10%">remark</th>
                 <th width="10%"></th>
                 <th width="10%">
@@ -270,6 +347,8 @@ function Home() {
                     </div>
                   )}
                 </th>
+                <th width="10%"></th>
+
               </tr>
             </thead>
             <tbody>
@@ -281,8 +360,8 @@ function Home() {
                   <td>{item.km}</td>
                   <td>{item.bib_id}</td>
                   <td>{item.shirt_size}</td>
-                  <td>{item.company?item.company+"/":""}{item.employee_code}</td>
-                  <td style={{ backgroundColor: (item.remark_award)?"yellow":"" }}>{item.remark_award}</td>
+                  <td>{item.company ? item.company + "/" : ""}{item.employee_code}</td>
+                  <td style={{ backgroundColor: (item.remark_award) ? "yellow" : "" }}>{item.remark_award}</td>
                   <td>
                     <Button
                       variant="primary"
@@ -290,46 +369,82 @@ function Home() {
                     >
                       ตรวจสอบข้อมูล
                     </Button>
+                    {item.payment_amount?"มีใบกำกับภาษี":""}
                   </td>
                   <td>
-                  {item.status_register === "Check" ? ( <span
+                    <div style={{ width: "150px", display: "flex" }}>
+                      {item.status_register === "Check" ? (<span
                         style={{
                           backgroundColor: "red",
-                         // color: "green",
+                          // color: "green",
                           fontWeight: "bold",
                           display: "block",
                           textAlign: "center",
                         }}
                       >
                         สถานะการสมัคร Check
-                      </span>):
-                    (item.shirt_status === "Received" ? (
-                      <span
-                        style={{
-                          color: "green",
-                          fontWeight: "bold",
-                          display: "block",
-                          textAlign: "center",
-                        }}
-                      >
-                        รับเสื้อแล้ว
-                      </span>
-                    ) : (
-                      <Form.Check
-                        type="checkbox"
-                        label={
-                          <span style={{ color: "red" }} onClick={() =>
-                            handleCheckboxChange(item.id, item.shirt_status)}>
-                            ยังไม่ได้รับเสื้อ
+                      </span>) :
+                        (item.shirt_status === "Received" ? (
+                          <span
+                            style={{
+                              color: "green",
+                              fontWeight: "bold",
+                              display: "block",
+                              textAlign: "center",
+                            }}
+                          >
+                            รับเสื้อแล้ว
                           </span>
-                        }
-                        checked={checkedItems[item.id] || false}
-                        onChange={() =>
-                          handleCheckboxChange(item.id, item.shirt_status)
-                        }
+                        ) : (
+                          <Form.Check
+                            type="checkbox"
+                            label={
+                              <span style={{ color: "red" }} onClick={() =>
+                                handleCheckboxChange(item.id, item.shirt_status)}>
+                                ยังไม่ได้รับเสื้อ
+                              </span>
+                            }
+                            checked={checkedItems[item.id] || false}
+                            onChange={() =>
+                              handleCheckboxChange(item.id, item.shirt_status)
+                            }
+                          />
+                        ))
+                      }
+                    </div>
+                    <div style={{ width: "150px" }}>
+                      <IoMdContact style={{ width: "30px", float: "left" }} />
+                      <Form.Control
+                        type="text"
+                        name="contact_name"
+                        value={contactNameData[item.id]}
+                        readOnly={item.shirt_status === "Received" ? true : false}
+                        placeholder="ชื่อผู้ติดต่อ"
+                        onChange={(event) => handleInputContactName(item.id, event.target.value)}
+                        className="form-text"
+                        style={{
+                          float: "left",
+                          paddingBottom: "0.5rem", width: "120px", backgroundColor: (item.shirt_status === "Received") ? "#e9ecef" : "#fff"
+                        }}
                       />
-                    ))
-                  }
+
+                    </div>
+                    <br />
+                    <div style={{ width: "150px" }}>
+                      <FaPhoneAlt style={{ width: "30px", float: "left" }} />
+
+                      <Form.Control
+                        type="text"
+                        name="contact_phone"
+                        value={contactTelData[item.id]}
+                        readOnly={item.shirt_status === "Received" ? true : false}
+                        placeholder="เบอร์ผู้ติดต่อ"
+                        onChange={(event) => handleInputContactTel(item.id, event.target.value)}
+                        className="form-text"
+                        style={{ paddingBottom: "0.5rem", width: "120px", backgroundColor: (item.shirt_status === "Received") ? "#e9ecef" : "#fff" }}
+                      />
+                    </div>
+
                   </td>
                 </tr>
               ))}
@@ -337,49 +452,49 @@ function Home() {
           </Table>
 
           {/* Pagination */}
-         {/* Pagination */}
-<div className="d-flex justify-content-center">
-  <Pagination>
-    {currentPage > 1 && (
-      <Pagination.First onClick={() => setCurrentPage(1)} />
-    )}
-    {currentPage > 1 && (
-      <Pagination.Prev onClick={() => setCurrentPage(currentPage - 1)} />
-    )}
+          {/* Pagination */}
+          <div className="d-flex justify-content-center">
+            <Pagination>
+              {currentPage > 1 && (
+                <Pagination.First onClick={() => setCurrentPage(1)} />
+              )}
+              {currentPage > 1 && (
+                <Pagination.Prev onClick={() => setCurrentPage(currentPage - 1)} />
+              )}
 
-    {Array.from({ length: Math.min(10, totalPages) }, (_, index) => {
-      const pageNumber = index + 1;
-      return (
-        <Pagination.Item
-          key={pageNumber}
-          active={pageNumber === currentPage}
-          onClick={() => setCurrentPage(pageNumber)}
-        >
-          {pageNumber}
-        </Pagination.Item>
-      );
-    })}
+              {Array.from({ length: Math.min(10, totalPages) }, (_, index) => {
+                const pageNumber = index + 1;
+                return (
+                  <Pagination.Item
+                    key={pageNumber}
+                    active={pageNumber === currentPage}
+                    onClick={() => setCurrentPage(pageNumber)}
+                  >
+                    {pageNumber}
+                  </Pagination.Item>
+                );
+              })}
 
-    {totalPages > 10 && currentPage < totalPages && (
-      <>
-        <Pagination.Ellipsis />
-        <Pagination.Item
-          active={totalPages === currentPage}
-          onClick={() => setCurrentPage(totalPages)}
-        >
-          {totalPages}
-        </Pagination.Item>
-      </>
-    )}
+              {totalPages > 10 && currentPage < totalPages && (
+                <>
+                  <Pagination.Ellipsis />
+                  <Pagination.Item
+                    active={totalPages === currentPage}
+                    onClick={() => setCurrentPage(totalPages)}
+                  >
+                    {totalPages}
+                  </Pagination.Item>
+                </>
+              )}
 
-    {currentPage < totalPages && (
-      <Pagination.Next onClick={() => setCurrentPage(currentPage + 1)} />
-    )}
-    {currentPage < totalPages && (
-      <Pagination.Last onClick={() => setCurrentPage(totalPages)} />
-    )}
-  </Pagination>
-</div>
+              {currentPage < totalPages && (
+                <Pagination.Next onClick={() => setCurrentPage(currentPage + 1)} />
+              )}
+              {currentPage < totalPages && (
+                <Pagination.Last onClick={() => setCurrentPage(totalPages)} />
+              )}
+            </Pagination>
+          </div>
 
         </>
       ) : (
