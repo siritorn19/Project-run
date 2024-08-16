@@ -19,9 +19,27 @@ const Navbar = () => {
     <nav className="navbar bg-body-tertiary shadow p-3 mb-5 bg-white rounded">
       <Container fluid>
         <span className="navbar-brand mb-0 h1" onClick={handleReload}>
-          BigC running together [{`${process.env.REACT_APP_ENV}`}]
+          BigC running together [{`${process.env.REACT_APP_ENV}`}] |
         </span>
+      
         <Nav className="me-auto">
+        <Nav.Link
+            href="/home"
+            className={
+              location.pathname === "/home"
+                ? "nav-link active bg-dark text-white"
+                : "nav-link"
+            }
+            style={{
+              color: location.pathname === "/home" ? "white" : "black",
+              backgroundColor:
+                location.pathname === "/home"
+                  ? "darkgreen"
+                  : "transparent",
+            }}
+          >
+            <b>รับเสื้อ</b>
+          </Nav.Link>
           <Nav.Link
             href="/medalpage"
             className={
@@ -69,7 +87,7 @@ const Navbar = () => {
                 location.pathname === "/export" ? "darkgreen" : "transparent",
             }}
           >
-            <b>Export</b>
+            <b>Export To google</b>
           </Nav.Link>
         </Nav>
         <Nav>

@@ -225,7 +225,6 @@ function Home() {
                 <th width="10%">เบอร์โทรศัพท์</th>
                 <th width="15%">ระยะวิ่ง</th>
                 <th width="5%">BIB No</th>
-                <th width="10%">ขนาดเสื้อ</th>
                 <th width="5%">บริษัท/รหัสพนักงาน</th>
                 <th width="10%">remark</th>
                 <th width="10%"></th>
@@ -251,7 +250,10 @@ function Home() {
                   <td>{item.card_id}</td>
                   <td>{item.name}</td>
                   <td>{item.tel}</td>
-                  <td>{item.km}</td>
+                  <td style={{backgroundColor: (item.km.indexOf("2.5")>1?"pink":item.km.indexOf("5")>1?"red":item.km.indexOf("10")>1?"blue":""),
+                   color: (item.km.indexOf("2.5")>1?"#000":"#FFF")
+                   }}
+                  >{item.km}</td>
                   <td>
                     <b
                       style={{
@@ -262,7 +264,6 @@ function Home() {
                       {item.bib_id}
                     </b>
                   </td>
-                  <td>{item.shirt_size}</td>
                   <td>
                     {item.company ? item.company + "/" : ""}
                     {item.employee_code}
@@ -296,7 +297,7 @@ function Home() {
                         >
                           สถานะการสมัคร Check
                         </span>
-                      ) : item.shirtStatus === "Received" ? (
+                      ) : item.shirt_status === "Received" ? (
                         <span
                           style={{
                             color: "green",

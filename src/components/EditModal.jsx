@@ -186,15 +186,31 @@ function EditModal({ show, onClose, id }) {
               <Form.Label as="h5" className="font-weight-bold">
                 บัตรเดิน-วิ่ง ระยะ
               </Form.Label>
-              <Form.Control
-                type="text"
-                name="km"
-                value={data.km || ""}
-                onChange={handleInputChange}
-                readOnly={!isEditing}
-                className="form-text"
-                style={{ paddingBottom: "0.5rem", width: "80%", backgroundColor: isEditing ? "#fff" : "#e9ecef" }}
-              />
+              <Form.Select 
+                  onChange={handleInputChange}
+                  name="km"
+                  disabled={!isEditing}      
+                  style={{
+                    width: "80%",
+                    fontWeight: "bold",
+                    fontSize: "18px",
+                    padding: "0.375rem 0.75rem", // Mimics padding of input
+                    borderRadius: "4px",
+                    border: "1px solid #ced4da", // Mimics border of input
+                  }} 
+                  value={data.km || ""}
+                >
+                   <option value="VIP ระยะ 2.5 กิโลเมตร : ราคา 1,000 บาท (รับเพิ่ม กระติกน้ำ Besico)">VIP ระยะ 2.5 กิโลเมตร : ราคา 1,000 บาท (รับเพิ่ม กระติกน้ำ Besico)</option>
+                   <option value="VIP ระยะ 5 กิโลเมตร : ราคา 1,000 บาท (รับเพิ่ม กระติกน้ำ Besico)">VIP ระยะ 5 กิโลเมตร : ราคา 1,000 บาท (รับเพิ่ม กระติกน้ำ Besico)</option>
+                   <option value="VIP ระยะ 10 กิโลเมตร : ราคา 1,000 บาท (รับเพิ่ม กระติกน้ำ Besico)">VIP ระยะ 10 กิโลเมตร : ราคา 1,000 บาท (รับเพิ่ม กระติกน้ำ Besico)</option>
+                   <option value="ระยะ 2.5 กิโลเมตร : ราคา 400 บาท">ระยะ 2.5 กิโลเมตร : ราคา 400 บาท</option>
+                   <option value="ระยะ 5 กิโลเมตร : ราคา 400 บาท">ระยะ 5 กิโลเมตร : ราคา 400 บาท</option>
+                   <option value="ระยะ 10 กิโลเมตร : ราคา 500 บาท">ระยะ 10 กิโลเมตร : ราคา 500 บาท</option>
+                   <option value="ระยะ 2.5 กิโลเมตร : ราคา 300 บาท">ระยะ 2.5 กิโลเมตร : ราคา 300 บาท</option>
+                   <option value="ระยะ 5 กิโลเมตร : ราคา 300 บาท">ระยะ 5 กิโลเมตร : ราคา 300 บาท</option>
+                   <option value="ระยะ 10 กิโลเมตร : ราคา 400 บาท">ระยะ 10 กิโลเมตร : ราคา 400 บาท</option>
+                   </Form.Select>
+                  *** กรณีเปลี่ยนระยะต้อง run BIB ใหม่ กรุณาติดต่อ admin
             </div>
           </div>
 
@@ -204,42 +220,48 @@ function EditModal({ show, onClose, id }) {
               <Form.Label as="h5" className="font-weight-bold">
                 สถานะรับเสื้อ :
               </Form.Label>
-              <div
-                className="form-text"
-                style={{
-                  width: "80%",
-                  color: data.shirt_status === "Received" ? "green" : "red",
-                  fontWeight: "bold",
-                  fontSize: "18px",
-                  padding: "0.375rem 0.75rem", // Mimics padding of input
-                  backgroundColor: "#e9ecef",
-                  borderRadius: "4px",
-                  border: "1px solid #ced4da", // Mimics border of input
-                }}
-              >
-                {data.shirt_status==="Received" ? "รับเสื้อแล้ว" : "ยังไม่ได้รับเสื้อ"}
-              </div>
+              <Form.Select 
+                  onChange={handleInputChange}
+                  name="shirt_status"
+                  disabled={!isEditing}      
+                  style={{
+                    width: "80%",
+                    color: data.shirt_status === "Received" ? "green" : "red",
+                    fontWeight: "bold",
+                    fontSize: "18px",
+                    padding: "0.375rem 0.75rem", // Mimics padding of input
+                    borderRadius: "4px",
+                    border: "1px solid #ced4da", // Mimics border of input
+                  }} 
+                  value={data.shirt_status || ""}
+                >
+                  <option value="Received">รับเสื้อแล้ว</option>
+                  <option value="-">ยังไม่ได้รับเสื้อ</option>
+                </Form.Select>
             </div>
 
             <div className="mb-3">
               <Form.Label as="h5" className="font-weight-bold">
                 สถานะลงทะเบียน :
               </Form.Label>
-              <div
-                className="form-text"
-                style={{
-                  width: "80%",
-                  color: data.status_register === "Completed" ? "green" : "red",
-                  fontWeight: "bold",
-                  fontSize: "18px",
-                  padding: "0.375rem 0.75rem", // Mimics padding of input
-                  backgroundColor: "#e9ecef",
-                  borderRadius: "4px",
-                  border: "1px solid #ced4da", // Mimics border of input
-                }}
-              >
-                {data.status_register || "ยังไม่ลงทะเบียน"}
-              </div>
+              <Form.Select 
+                  onChange={handleInputChange}
+                  name="status_register"
+                  disabled={!isEditing}      
+                  style={{
+                    width: "80%",
+                    color: data.status_register === "Completed" ? "green" : "red",
+                    fontWeight: "bold",
+                    fontSize: "18px",
+                    padding: "0.375rem 0.75rem", // Mimics padding of input
+                    borderRadius: "4px",
+                    border: "1px solid #ced4da", // Mimics border of input
+                  }} 
+                  value={data.status_register || ""}
+                >
+                  <option value="Completed">Completed</option>
+                  <option value="Check">Check</option>
+                </Form.Select>
             </div>
             <div className="mb-3">
               <Form.Label as="h5" className="font-weight-bold">
