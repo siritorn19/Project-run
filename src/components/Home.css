@@ -27,6 +27,11 @@
   display: block;
   margin-bottom: 10px;
 }
+.form-check-input[type=checkbox] {
+  width: 1.5em;
+  height: 1.5em;
+  margin-right: 5px;
+}
 
 /* เพิ่ม CSS นี้ถ้าคุณต้องการปรับแต่งขนาดของ modal เพิ่มเติม */
 .modal-dialog.modal-xl {

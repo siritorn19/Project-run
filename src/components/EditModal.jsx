@@ -20,14 +20,14 @@ function EditModal({ show, onClose, id }) {
   const fetchApiData = async () => {
     try {
       const result = await Axios.get(
-        `https://bigc-special-project-api-stg-aedsyeswba-as.a.run.app/running72/account/${id}`,
+        `${process.env.REACT_APP_BACKEND_DOMAIN_API}/running72/account/${id}`,
         {
           headers: {
-            'x-api-key': 'line-stg'
+            'x-api-key': process.env.REACT_APP_X_API_KEY
           }
         }
       );
-      console.log(result.data);
+      //console.log(result.data);
       setData(result.data.data);  // Assuming data is nested under 'data'
     } catch (error) {
       console.error(error);
@@ -36,13 +36,15 @@ function EditModal({ show, onClose, id }) {
 
   const handleSave = async () => {
     setIsLoading(true);
+   
     try {
+
       await Axios.post(
-        `https://bigc-special-project-api-stg-aedsyeswba-as.a.run.app/running72/account/update`,
+        `${process.env.REACT_APP_BACKEND_DOMAIN_API}/running72/account/update`,
         data,  // Send the updated data
         {
           headers: {
-            'x-api-key': 'line-stg',
+            'x-api-key': process.env.REACT_APP_X_API_KEY,
             'Content-Type': 'application/json'
           }
         }
@@ -177,7 +179,7 @@ function EditModal({ show, onClose, id }) {
                 onChange={handleInputChange}
                 readOnly={!isEditing}
                 className="form-text"
-                style={{ width: "80%", borderBottom: "1px solid #dee2e6", backgroundColor: isEditing ? "#fff" : "#e9ecef" }}
+                style={{ width: "80%", borderBottom: "1px solid #dee2e6", backgroundColor: "#e9ecef"  }}
               />
             </div>
             <div className="mb-3">
@@ -206,7 +208,7 @@ function EditModal({ show, onClose, id }) {
                 className="form-text"
                 style={{
                   width: "80%",
-                  color: data.shirt_status === "รับเสื้อแล้ว" ? "green" : "red",
+                  color: data.shirt_status === "Received" ? "green" : "red",
                   fontWeight: "bold",
                   fontSize: "18px",
                   padding: "0.375rem 0.75rem", // Mimics padding of input
@@ -215,7 +217,7 @@ function EditModal({ show, onClose, id }) {
                   border: "1px solid #ced4da", // Mimics border of input
                 }}
               >
-                {data.shirt_status || "ยังไม่ได้รับเสื้อ"}
+                {data.shirt_status==="Received" ? "รับเสื้อแล้ว" : "ยังไม่ได้รับเสื้อ"}
               </div>
             </div>
 
@@ -237,6 +239,65 @@ function EditModal({ show, onClose, id }) {
                 }}
               >
                 {data.status_register || "ยังไม่ลงทะเบียน"}
+              </div>
+            </div>
+            <div className="mb-3">
+              <Form.Label as="h5" className="font-weight-bold">
+                BIB
+              </Form.Label>
+              <Form.Control
+                type="text"
+                name="bib_id"
+                value={data.bib_id || ""}
+                onChange={handleInputChange}
+                readOnly={!isEditing}
+                className="form-text"
+                style={{ paddingBottom: "0.5rem", width: "80%", borderBottom: "1px solid #dee2e6", backgroundColor: isEditing ? "#fff" : "#e9ecef" }}
+              />
+            </div>
+            <div className="mb-3">
+              <Form.Label as="h5" className="font-weight-bold">
+                PDPA : 
+              </Form.Label>
+                <Form.Select 
+                  onChange={handleInputChange}
+                  name="pdpa"
+                  disabled={!isEditing}      
+                  style={{
+                    width: "80%",
+                    color: data.pdpa === "Accept" ? "green" : "red",
+                    fontWeight: "bold",
+                    fontSize: "18px",
+                    padding: "0.375rem 0.75rem", // Mimics padding of input
+                    borderRadius: "4px",
+                    border: "1px solid #ced4da", // Mimics border of input
+                  }} 
+                  value={data.pdpa || ""}
+
+                >
+                  <option value="Accept">Accept</option>
+                  <option value="Not Accept">Not Accept</option>
+                </Form.Select>
+            </div>
+            <div className="mb-3">
+              <Form.Label as="h5" className="font-weight-bold">
+                Remark :
+              </Form.Label>
+              <div
+                className="form-text"
+                style={{
+                  width: "80%",
+                  minHeight: "120px",
+                  fontWeight: "bold",
+                  fontSize: "18px",
+                  padding: "0.375rem 0.75rem", // Mimics padding of input
+                  backgroundColor: "#e9ecef",
+                  borderRadius: "4px",
+                  border: "1px solid #ced4da", // Mimics border of input
+                }}
+              >
+                {data.payment_remarks || ""}
+                {data.remark_award || ""}
               </div>
             </div>
           </div>

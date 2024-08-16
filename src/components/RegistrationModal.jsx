@@ -11,12 +11,12 @@ const RegistrationModal = ({ show, onClose, name }) => {
     try {
       const url = "https://sheet.best/api/sheets/4564c89f-94a7-45dc-988e-842b17b2dc76";
       const payload = { statusRegister: "ลงทะเบียนแล้ว" };
-      console.log("url:", url);
-      console.log("Sending payload:", payload);
+      //console.log("url:", url);
+      //console.log("Sending payload:", payload);
 
       const response = await axios.post(url, payload);
       
-      console.log("API response:", response);
+      //console.log("API response:", response);
       alert("ลงทะเบียนสำเร็จแล้ว");
       onClose();
     } catch (error) {
